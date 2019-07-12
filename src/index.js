@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const title = 'React with Webpack and Babel';
+import App from './App';
 
-ReactDOM.render(<div>{title}</div>, document.getElementById('root'));
+import './styles.scss';
+
+ReactDOM.render(<App />, document.getElementById('root'));
 
 if (module.hot) {
   module.hot.accept();
