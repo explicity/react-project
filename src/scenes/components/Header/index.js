@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import {
   Navbar,
@@ -61,3 +62,12 @@ class Header extends Component {
 }
 
 export default Header;
+
+Header.propTypes = {
+  data: PropTypes.shape({
+    participants: PropTypes.number,
+    messagesAmount: PropTypes.number,
+    lastMessage: PropTypes.string
+  })
+};
+

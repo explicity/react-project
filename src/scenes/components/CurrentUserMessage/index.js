@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { FaRegThumbsUp, FaTrashAlt, FaRegEdit } from 'react-icons/fa';
 import { Form, Input, FormGroup, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
@@ -115,3 +116,13 @@ class CurrentUserMessage extends Component {
 }
 
 export default CurrentUserMessage;
+
+CurrentUserMessage.propTypes = {
+  data: PropTypes.shape({
+    id: PropTypes.string,
+    created_at: PropTypes.string,
+    message: PropTypes.string
+  }),
+  removeItem: PropTypes.func,
+  editItem: PropTypes.func
+};

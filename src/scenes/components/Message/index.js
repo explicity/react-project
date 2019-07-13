@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { FaRegThumbsUp } from 'react-icons/fa';
 
@@ -61,3 +62,15 @@ class Message extends Component {
 }
 
 export default Message;
+
+Message.propTypes = {
+  likeItem: PropTypes.func,
+  data: PropTypes.shape({
+    id: PropTypes.string,
+    created_at: PropTypes.string,
+    message: PropTypes.string,
+    currentUser: PropTypes.bool,
+    isLiked: PropTypes.bool,
+    avatar: PropTypes.string
+  }),
+};

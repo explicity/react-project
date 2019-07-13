@@ -1,26 +1,24 @@
-import React, { Component } from "react";
-import { map } from "lodash";
-import moment from "moment";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { map } from 'lodash';
+import moment from 'moment';
 
-import Message from "../Message";
-import CurrentUserMessage from "../CurrentUserMessage";
+import Message from '../Message';
+import CurrentUserMessage from '../CurrentUserMessage';
 
-import "./messageList.scss";
+import './messageList.scss';
 
 class MessageList extends Component {
   constructor(props) {
     super(props);
 
     this.getSplitDivider = this.getSplitDivider.bind(this);
+    this.scrollToBottom = this.scrollToBottom.bind(this);
   }
 
   componentDidMount() {
     this.scrollToBottom();
   }
-
-  scrollToBottom = () => {
-    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
-  };
 
   getSplitDivider(index) {
     const { messages } = this.props;
@@ -28,16 +26,18 @@ class MessageList extends Component {
 
     if (index !== 0) {
       const secondDate = moment(messages[index - 1].created_at);
-      if (!firstDate.isSame(secondDate, "day")) {
+      if (!firstDate.isSame(secondDate, 'day')) {
         return (
           <div className="time-divider">{moment(firstDate).fromNow()}</div>
         );
       }
-
-      return null;
     } else {
       return <div className="time-divider">{moment(firstDate).fromNow()}</div>;
     }
+  }
+
+  scrollToBottom() {
+    this.messagesEnd.scrollIntoView({ behavior: 'smooth' });
   }
 
   render() {
@@ -66,10 +66,10 @@ class MessageList extends Component {
           <div className="message-list">
             {messagesList}
             <div
-              style={{ float: "left", clear: "both", height: 1 }}
-              ref={el => {
-                this.messagesEnd = el;
-              }}
+              style={{ float: 'left', clear: 'both', height: 1 }}
+              ref={el => (
+                this.messagesEnd = el
+              )}
             />
           </div>
         ) : (
@@ -81,3 +81,10 @@ class MessageList extends Component {
 }
 
 export default MessageList;
+
+MessageList.propTypes = {
+  messages: PropTypes.arrayOf(PropTypes.object),
+  removeItem: PropTypes.func,
+  likeItem: PropTypes.func,
+  editItem: PropTypes.func,
+}

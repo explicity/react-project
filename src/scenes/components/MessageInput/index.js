@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import uuidv4 from 'uuid/v4';
 import moment from 'moment';
 
-import { Button, Form, FormGroup, Input } from "reactstrap";
+import { Button, Form, FormGroup, Input } from 'reactstrap';
 
 import './messageInput.scss';
 
@@ -11,12 +12,39 @@ class MessageInput extends Component {
     super(props);
 
     this.state = {
-      message: "",
-      error: ""
+      message: '',
+      error: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  onSubmit(event) {
+    event.preventDefault();
+
+    const { message } = this.state;
+    if (!this.isFormValid()) {
+      this.setState({ error: 'Please type a message!' });
+      return;
+    }
+
+    this.setState({
+      error: ''
+    });
+
+    const data = {
+      id: uuidv4(),
+      created_at: `${moment().format('YYYY-MM-DD HH:mm:ss')}`,
+      message,
+      currentUser: true
+    };
+
+    this.props.addMessage(data);
+  
+    this.setState({
+      message: ''
+    });
   }
 
   handleChange(event) {
@@ -27,38 +55,9 @@ class MessageInput extends Component {
     });
   }
 
-  onSubmit(event) {
-    event.preventDefault();
-
-    const { message } = this.state;
-    if (!this.isFormValid()) {
-        this.setState({ error: "Please type a message!" });
-        return;
-      }
-
-    this.setState({
-        error: ''
-    })
-
-    const data = {
-        id: uuidv4(),
-        created_at: `${moment().format('YYYY-MM-DD HH:mm:ss')}`,
-        message,
-        currentUser: true
-    }
-
-    this.props.addMessage(data);
-  
-    this.setState({
-      message: ''
-    })
-  }
-
-
-
   isFormValid() {
     const { message } = this.state;
-    return message !== "";
+    return message !== '';
   }
 
   renderError() {
@@ -87,3 +86,7 @@ class MessageInput extends Component {
 }
 
 export default MessageInput;
+
+MessageInput.propTypes = {
+  addMessage: PropTypes.func
+};
