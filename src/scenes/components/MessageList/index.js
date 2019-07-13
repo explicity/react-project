@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { map } from "lodash";
+import moment from "moment";
 
 import Message from "../Message";
 import CurrentUserMessage from "../CurrentUserMessage";
@@ -7,6 +8,12 @@ import CurrentUserMessage from "../CurrentUserMessage";
 import "./messageList.scss";
 
 class MessageList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.getSplitDivider = this.getSplitDivider.bind(this);
+  }
+
   componentDidMount() {
     this.scrollToBottom();
   }
@@ -15,21 +22,43 @@ class MessageList extends Component {
     this.messagesEnd.scrollIntoView({ behavior: "smooth" });
   };
 
+  getSplitDivider(index) {
+    const { messages } = this.props;
+    const firstDate = moment(messages[index].created_at);
+
+    if (index !== 0) {
+      const secondDate = moment(messages[index - 1].created_at);
+      if (!firstDate.isSame(secondDate, "day")) {
+        return (
+          <div className="time-divider">{moment(firstDate).fromNow()}</div>
+        );
+      }
+
+      return null;
+    } else {
+      return <div className="time-divider">{moment(firstDate).fromNow()}</div>;
+    }
+  }
+
   render() {
     const { messages, removeItem, likeItem, editItem } = this.props;
 
-    const messagesList = map(messages, item =>
-      item.currentUser ? (
-        <CurrentUserMessage
-          data={item}
-          key={item.id}
-          removeItem={removeItem}
-          editItem={editItem}
-        />
-      ) : (
-        <Message data={item} key={item.id} likeItem={likeItem} />
-      )
-    );
+    const messagesList = map(messages, (item, index) => {
+      return (
+        <React.Fragment key={item.id}>
+          {this.getSplitDivider(index)}
+          {item.currentUser ? (
+            <CurrentUserMessage
+              data={item}
+              removeItem={removeItem}
+              editItem={editItem}
+            />
+          ) : (
+            <Message data={item} likeItem={likeItem} />
+          )}
+        </React.Fragment>
+      );
+    });
 
     return (
       <React.Fragment>
