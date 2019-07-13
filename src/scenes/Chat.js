@@ -3,9 +3,9 @@ import axios from "axios";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-import Header from "./components/header/Header";
-import MessageList from "./components/messageList/MessageList";
-import MessageInput from "./components/messageInput/messageInput";
+import Header from "./components/Header";
+import MessageList from "./components/MessageList";
+import MessageInput from "./components/MessageInput";
 
 import "./chat.scss";
 
@@ -97,6 +97,7 @@ class Chat extends Component {
 
   render() {
     const { data, loading } = this.state;
+    
     return (
       <div className="chat">
         <div className="container">

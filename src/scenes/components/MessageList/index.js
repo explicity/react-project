@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-
 import { map } from "lodash";
 
-import Message from "./Message";
+import Message from "../Message";
+import CurrentUserMessage from "../CurrentUserMessage";
 
 import "./messageList.scss";
 
@@ -15,13 +15,21 @@ class MessageList extends Component {
     this.messagesEnd.scrollIntoView({ behavior: "smooth" });
   };
 
-
   render() {
     const { messages, removeItem, likeItem, editItem } = this.props;
 
-    const messagesList = map(messages, (item) => (
-        <Message data={item} key={item.id} removeItem={removeItem} likeItem={likeItem} editItem={editItem} />
-    ));
+    const messagesList = map(messages, item =>
+      item.currentUser ? (
+        <CurrentUserMessage
+          data={item}
+          key={item.id}
+          removeItem={removeItem}
+          editItem={editItem}
+        />
+      ) : (
+        <Message data={item} key={item.id} likeItem={likeItem} />
+      )
+    );
 
     return (
       <React.Fragment>
