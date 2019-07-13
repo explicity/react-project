@@ -3,7 +3,8 @@ import axios from "axios";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-import Header from './components/Header';
+import Header from './components/header/Header';
+import MessageList from './components/messageList/MessageList';
 
 import './chat.scss';
 
@@ -22,7 +23,7 @@ class Chat extends Component {
   componentDidMount() {
     this._isMounted = true;
 
-    axios.get("https://api.myjson.com/bins/k9o87").then(res => {
+    axios.get("https://api.myjson.com/bins/1hiqin").then(res => {
       if (this._isMounted) {
         this.setState({
           loading: false,
@@ -52,7 +53,7 @@ class Chat extends Component {
           ) : (
             <React.Fragment>
               <Header />
-
+              <MessageList messages={data} />
             </React.Fragment>
           )}
         </div>
