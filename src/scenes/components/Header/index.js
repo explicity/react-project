@@ -51,7 +51,7 @@ class Header extends Component {
               </NavLink>
             </NavItem>
             <NavItem className="time">
-              <p>last message at {lastMessage}</p>
+              <p>last message at {lastMessage.split(" ")[1]}</p>
             </NavItem>
           </Nav>
         </Collapse>

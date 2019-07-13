@@ -42,7 +42,7 @@ class MessageInput extends Component {
 
     const data = {
         id: uuidv4(),
-        created_at: `${moment().format('L, h:mm:ss')}`,
+        created_at: `${moment().format('YYYY-MM-DD HH:mm:ss')}`,
         message,
         currentUser: true
     }

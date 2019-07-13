@@ -83,7 +83,7 @@ class Chat extends Component {
     const messages = data.map(item =>
       item.id === id ? { ...item, message: text } : item
     );
-    
+
     this.setState({
       data: messages
     });
@@ -95,9 +95,22 @@ class Chat extends Component {
     return message[0].isLiked;
   }
 
+  getHeaderData() {
+    const { data } = this.state;
+
+    const participants = [...new Set(data.map(item => item.user))].length;
+    const messagesAmount = data.length;
+
+    return {
+      participants,
+      messagesAmount,
+      lastMessage: data[messagesAmount - 1].created_at
+    };
+  }
+
   render() {
     const { data, loading } = this.state;
-    
+
     return (
       <div className="chat">
         <div className="container">
@@ -111,7 +124,7 @@ class Chat extends Component {
             </div>
           ) : (
             <React.Fragment>
-              <Header />
+              <Header data={this.getHeaderData()} />
               <MessageList
                 messages={data}
                 removeItem={this.removeItem}
