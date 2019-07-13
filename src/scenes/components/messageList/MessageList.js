@@ -11,20 +11,16 @@ class MessageList extends Component {
     this.scrollToBottom();
   }
 
-  componentDidUpdate() {
-    this.scrollToBottom();
-  }
-
   scrollToBottom = () => {
     this.messagesEnd.scrollIntoView({ behavior: "smooth" });
   };
 
 
   render() {
-    const { messages, removeItem } = this.props;
+    const { messages, removeItem, likeItem } = this.props;
 
     const messagesList = map(messages, (item) => (
-        <Message data={item} key={item.id} removeItem={removeItem}  />
+        <Message data={item} key={item.id} removeItem={removeItem} likeItem={likeItem}  />
     ));
 
     return (

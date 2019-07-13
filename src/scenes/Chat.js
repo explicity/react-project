@@ -22,6 +22,7 @@ class Chat extends Component {
 
     this.addMessage = this.addMessage.bind(this);
     this.removeItem = this.removeItem.bind(this);
+    this.likeItem = this.likeItem.bind(this);
   }
 
   componentDidMount() {
@@ -63,6 +64,23 @@ class Chat extends Component {
     });
   }
 
+  likeItem(id) {
+    console.log(id);
+    const { data } = this.state;
+
+    let isLiked = !this.ifAlreadyLiked(id);
+    const messages = data.map(message => message.id === id ? {...message, isLiked} : message );    
+    this.setState({
+      data: messages
+    })
+  }
+
+  ifAlreadyLiked(id) {
+    const { data } = this.state;
+    const message = data.filter(message => message.id === id);
+    return message[0].isLiked;
+  }
+
   render() {
     const { data, loading } = this.state;
     return (
@@ -79,7 +97,7 @@ class Chat extends Component {
           ) : (
             <React.Fragment>
               <Header />
-              <MessageList messages={data} removeItem={this.removeItem} />
+              <MessageList messages={data} removeItem={this.removeItem} likeItem={this.likeItem} />
               <MessageInput addMessage={this.addMessage} />
             </React.Fragment>
           )}

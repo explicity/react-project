@@ -50,6 +50,12 @@
   &-action {
     padding: 0 !important;
 
+    &.liked {
+      svg {
+        color: #1e70bf;
+      }
+    }
+
     &:not(:last-child) {
       margin-right: 10px;
     }

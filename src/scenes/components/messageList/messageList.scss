@@ -1,7 +1,7 @@
 .message-list {
   height: calc(100vh - 156px);
   padding: 10px;
-  overflow: scroll;
+  overflow-y: scroll;
 
   .message {
     width: 60%;
