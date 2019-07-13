@@ -2,6 +2,7 @@
   display: flex;
   align-items: flex-start;
   height: 100px;
+  position: relative;
 
   .form-group {
     width: 90%;
@@ -17,5 +18,13 @@
   .btn {
     width: 10%;
   }
+
+  .alert {
+    position: absolute;
+    top: -105%;
+    transform: translateY(105%);
+    width: 300px;
+  }
 }
+
 

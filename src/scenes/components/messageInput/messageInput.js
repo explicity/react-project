@@ -48,9 +48,10 @@ class MessageInput extends Component {
     }
 
     this.props.addMessage(data);
-
-    console.log(data);
-
+  
+    this.setState({
+      message: ''
+    })
   }
 
 

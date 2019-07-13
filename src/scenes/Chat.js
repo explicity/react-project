@@ -23,6 +23,7 @@ class Chat extends Component {
     this.addMessage = this.addMessage.bind(this);
     this.removeItem = this.removeItem.bind(this);
     this.likeItem = this.likeItem.bind(this);
+    this.editItem = this.editItem.bind(this);
   }
 
   componentDidMount() {
@@ -65,14 +66,27 @@ class Chat extends Component {
   }
 
   likeItem(id) {
-    console.log(id);
     const { data } = this.state;
 
     let isLiked = !this.ifAlreadyLiked(id);
-    const messages = data.map(message => message.id === id ? {...message, isLiked} : message );    
+    const messages = data.map(message =>
+      message.id === id ? { ...message, isLiked } : message
+    );
     this.setState({
       data: messages
-    })
+    });
+  }
+
+  editItem(id, text) {
+    const { data } = this.state;
+
+    const messages = data.map(item =>
+      item.id === id ? { ...item, message: text } : item
+    );
+    
+    this.setState({
+      data: messages
+    });
   }
 
   ifAlreadyLiked(id) {
@@ -97,7 +111,12 @@ class Chat extends Component {
           ) : (
             <React.Fragment>
               <Header />
-              <MessageList messages={data} removeItem={this.removeItem} likeItem={this.likeItem} />
+              <MessageList
+                messages={data}
+                removeItem={this.removeItem}
+                likeItem={this.likeItem}
+                editItem={this.editItem}
+              />
               <MessageInput addMessage={this.addMessage} />
             </React.Fragment>
           )}

@@ -17,10 +17,10 @@ class MessageList extends Component {
 
 
   render() {
-    const { messages, removeItem, likeItem } = this.props;
+    const { messages, removeItem, likeItem, editItem } = this.props;
 
     const messagesList = map(messages, (item) => (
-        <Message data={item} key={item.id} removeItem={removeItem} likeItem={likeItem}  />
+        <Message data={item} key={item.id} removeItem={removeItem} likeItem={likeItem} editItem={editItem} />
     ));
 
     return (
