@@ -24,6 +24,7 @@
     font-size: 14px;
     color: rgba(0, 0, 0, 0.87);
     transition: 0.2s;
+    margin-right: 6px;
 
     &:hover {
       color: #1e70bf;
@@ -32,7 +33,6 @@
 
   .metadata {
     display: inline-block;
-    margin-left: 6px;
     color: rgba(0, 0, 0, 0.4);
     font-size: 12px;
   }
@@ -49,6 +49,10 @@
 .btn {
   &-action {
     padding: 0 !important;
+
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
 
     &:hover {
       svg {

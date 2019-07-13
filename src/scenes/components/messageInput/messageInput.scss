@@ -1,0 +1,21 @@
+.message-input {
+  display: flex;
+  align-items: flex-start;
+  height: 100px;
+
+  .form-group {
+    width: 90%;
+    margin-right: 5px;
+    margin-bottom: 0;
+    height: 100%;
+
+    .form-control {
+        height: 100%;
+    }
+  }
+
+  .btn {
+    width: 10%;
+  }
+}
+

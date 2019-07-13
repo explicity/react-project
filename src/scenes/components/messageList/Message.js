@@ -1,33 +1,73 @@
-import React from "react";
+import React, { Component } from "react";
 
-import { FaRegThumbsUp } from "react-icons/fa";
+import { FaRegThumbsUp, FaTrashAlt, FaRegEdit } from "react-icons/fa";
 
 import "./message.scss";
 
-const Message = (props) => {
-  const { avatar, created_at, message, user } = props.data;
+class Message extends Component {
+  constructor(props) {
+    super(props);
 
-  return (
-    <div className="message">
-      <a href="#" className="avatar">
-        <img src={avatar} alt="user-avatar" style={{ height: 30, width: 30 }} />
-      </a>
-      <div className="content">
-        <a href="#" className="author">
-          {user}
-        </a>
-        <div className="metadata">
-          <p>{created_at}</p>
-        </div>
-        <p className="text">{message}</p>
-        <div className="actions">
-          <button type="button" className="btn-action btn">
-            <FaRegThumbsUp />
-          </button>
+    // this.likePost = this.likePost.bind(this);
+    this.deletePost = this.deletePost.bind(this);
+  }
+
+  deletePost(id) {
+    const { removeItem } = this.props;
+
+    removeItem(id);
+  }
+
+  render() {
+    console.log(this.props);
+    const { id, avatar, created_at, message, currentUser } = this.props.data;
+
+    return (
+      <div className={`message ${currentUser ? "current-user-message" : ""}`}>
+        {!currentUser && (
+          <a href="#" className="avatar">
+            <img
+              src={avatar}
+              alt="user-avatar"
+              style={{ height: 30, width: 30 }}
+            />
+          </a>
+        )}
+        <div className="content">
+          {/* <a href="#" className="author">
+              {user}
+            </a> */}
+          <div className="metadata">
+            <p>{created_at}</p>
+          </div>
+          <p className="text">{message}</p>
+          <div className="actions">
+            <button
+              type="button"
+              className="btn-action btn"
+              
+            >
+              <FaRegThumbsUp />
+            </button>
+            {currentUser && (
+              <React.Fragment>
+                <button
+                  type="button"
+                  className="btn-action btn"
+                  onClick={() => this.deletePost(id)}
+                >
+                  <FaTrashAlt />
+                </button>
+                <button type="button" className="btn-action btn">
+                  <FaRegEdit />
+                </button>
+              </React.Fragment>
+            )}
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default Message;

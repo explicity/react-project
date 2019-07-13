@@ -3,10 +3,11 @@ import axios from "axios";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-import Header from './components/header/Header';
-import MessageList from './components/messageList/MessageList';
+import Header from "./components/header/Header";
+import MessageList from "./components/messageList/MessageList";
+import MessageInput from "./components/messageInput/messageInput";
 
-import './chat.scss';
+import "./chat.scss";
 
 class Chat extends Component {
   _isMounted = true;
@@ -18,23 +19,48 @@ class Chat extends Component {
       data: [],
       loading: true
     };
+
+    this.addMessage = this.addMessage.bind(this);
+    this.removeItem = this.removeItem.bind(this);
   }
 
   componentDidMount() {
     this._isMounted = true;
 
-    axios.get("https://api.myjson.com/bins/1hiqin").then(res => {
-      if (this._isMounted) {
+    axios
+      .get("https://api.myjson.com/bins/1hiqin")
+      .then(res => {
+        if (this._isMounted) {
+          this.setState({
+            loading: false,
+            data: res.data
+          });
+        }
+      })
+      .catch(err => {
         this.setState({
-          loading: false,
-          data: res.data
+          loading: false
         });
-      }
-    });
+      });
   }
 
   componentWillUnmount() {
     this._isMounted = false;
+  }
+
+  addMessage(message) {
+    this.setState({
+      data: [...this.state.data, message]
+    });
+  }
+
+  removeItem(id) {
+    const { data } = this.state;
+    const messages = data.filter(message => message.id !== id);
+
+    this.setState({
+      data: messages
+    });
   }
 
   render() {
@@ -53,7 +79,8 @@ class Chat extends Component {
           ) : (
             <React.Fragment>
               <Header />
-              <MessageList messages={data} />
+              <MessageList messages={data} removeItem={this.removeItem} />
+              <MessageInput addMessage={this.addMessage} />
             </React.Fragment>
           )}
         </div>

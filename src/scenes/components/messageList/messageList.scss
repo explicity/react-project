@@ -1,0 +1,16 @@
+.message-list {
+  height: calc(100vh - 156px);
+  padding: 10px;
+  overflow: scroll;
+
+  .message {
+    width: 60%;
+    margin-bottom: 10px;
+
+    &.current-user-message {
+      margin-left: auto;
+      text-align: right;
+      justify-content: flex-end;
+    }
+  }
+}
