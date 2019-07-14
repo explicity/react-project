@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes, { object } from 'prop-types';
 import { connect } from 'react-redux';
-import * as messagesActions from './duck/actions/messages.actions';
+
 import CircularProgress from '@material-ui/core/CircularProgress';
+
+import * as messagesActions from './duck/actions/messages.actions';
 import { fetchMessages } from './duck/operations';
 
 import Header from './Header';
@@ -40,21 +42,13 @@ class Chat extends Component {
   }
 
   addMessage(message) {
-    this.setState({
-      data: [...this.state.data, message]
-    });
+    const { dispatch } = this.props;
+    dispatch(messagesActions.addMessage(message));
   }
 
   removeItem(id) {
     const { dispatch } = this.props;
     dispatch(messagesActions.removeMessage(id));
-
-    // const { data } = this.state;
-    // const messages = data.filter(message => message.id !== id);
-
-    // this.setState({
-    //   data: messages
-    // });
   }
 
   likeItem(id) {
@@ -113,7 +107,7 @@ class Chat extends Component {
             // likeItem={this.likeItem}
             // editItem={this.editItem}
           />
-          {/* <MessageInput addMessage={this.addMessage} /> */}
+          <MessageInput addMessage={this.addMessage} />
         </div>
       </div>
     );
