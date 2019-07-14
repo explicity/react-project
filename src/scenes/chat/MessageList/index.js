@@ -13,11 +13,11 @@ class MessageList extends Component {
     super(props);
 
     this.getSplitDivider = this.getSplitDivider.bind(this);
-    this.scrollToBottom = this.scrollToBottom.bind(this);
+    // this.scrollToBottom = this.scrollToBottom.bind(this);
   }
 
   componentDidMount() {
-    this.scrollToBottom();
+    // this.scrollToBottom();
   }
 
   getSplitDivider(index) {
@@ -36,9 +36,9 @@ class MessageList extends Component {
     }
   }
 
-  scrollToBottom() {
-    this.messagesEnd.scrollIntoView({ behavior: 'smooth' });
-  }
+  // scrollToBottom() {
+  //   this.messagesEnd.scrollIntoView({ behavior: 'smooth' });
+  // }
 
   render() {
     const { messages, removeItem, likeItem, editItem } = this.props;
@@ -54,7 +54,9 @@ class MessageList extends Component {
               editItem={editItem}
             />
           ) : (
-            <Message data={item} likeItem={likeItem} />
+            <Message data={item} likeItem={likeItem}
+            removeItem={removeItem}
+            />
           )}
         </React.Fragment>
       );
@@ -62,7 +64,6 @@ class MessageList extends Component {
 
     return (
       <React.Fragment>
-        {messages.length !== 0 ? (
           <div className="message-list">
             {messagesList}
             <div
@@ -72,9 +73,6 @@ class MessageList extends Component {
               )}
             />
           </div>
-        ) : (
-          <p>Be the first one to add a comment!</p>
-        )}
       </React.Fragment>
     );
   }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes, { object } from 'prop-types';
 import { connect } from 'react-redux';
-
+import * as messagesActions from './duck/actions/messages.actions';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { fetchMessages } from './duck/operations';
 
@@ -46,12 +46,15 @@ class Chat extends Component {
   }
 
   removeItem(id) {
-    const { data } = this.state;
-    const messages = data.filter(message => message.id !== id);
+    const { dispatch } = this.props;
+    dispatch(messagesActions.removeMessage(id));
 
-    this.setState({
-      data: messages
-    });
+    // const { data } = this.state;
+    // const messages = data.filter(message => message.id !== id);
+
+    // this.setState({
+    //   data: messages
+    // });
   }
 
   likeItem(id) {
@@ -103,14 +106,14 @@ class Chat extends Component {
     return (
       <div className="chat">
         <div className="container">
-          {/* <Header data={this.getHeaderData()} />
+          {/* <Header data={this.getHeaderData()} /> */}
           <MessageList
             messages={messages}
             removeItem={this.removeItem}
-            likeItem={this.likeItem}
-            editItem={this.editItem}
+            // likeItem={this.likeItem}
+            // editItem={this.editItem}
           />
-          <MessageInput addMessage={this.addMessage} /> */}
+          {/* <MessageInput addMessage={this.addMessage} /> */}
         </div>
       </div>
     );
@@ -118,7 +121,7 @@ class Chat extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { messages, loading, error } = state.fetchData;
+  const { messages, loading, error } = state.chat;
 
   return { messages, loading, error };
 };

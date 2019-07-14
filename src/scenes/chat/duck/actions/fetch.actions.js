@@ -1,19 +1,15 @@
-import {
-  FETCH_MESSAGES_PENDING,
-  FETCH_MESSAGES_SUCCESS,
-  FETCH_MESSAGES_ERROR
-} from '../constants/fetch.types';
+import types from '../constants/fetch.types';
 
 export const fetchMessagesPending = () => ({
-  type: FETCH_MESSAGES_PENDING
+  type: types.FETCH_MESSAGES_PENDING
 });
 
 export const fetchMessagesSuccess = messages => ({
-  type: FETCH_MESSAGES_SUCCESS,
+  type: types.FETCH_MESSAGES_SUCCESS,
   payload: { messages }
 });
 
 export const fetchMessagesError = error => ({
-  type: FETCH_MESSAGES_ERROR,
+  type: types.FETCH_MESSAGES_ERROR,
   payload: { error }
 });
