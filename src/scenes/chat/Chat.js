@@ -1,24 +1,19 @@
-import React, { Component } from "react";
-import axios from "axios";
+import React, { Component } from 'react';
+import PropTypes, { object } from 'prop-types';
+import { connect } from 'react-redux';
 
-import CircularProgress from "@material-ui/core/CircularProgress";
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { fetchMessages } from './duck/operations';
 
-import Header from "./Header";
-import MessageList from "./MessageList";
-import MessageInput from "./MessageInput";
+import Header from './Header';
+import MessageList from './MessageList';
+import MessageInput from './MessageInput';
 
-import "./chat.scss";
+import './chat.scss';
 
 class Chat extends Component {
-  _isMounted = true;
-
   constructor(props) {
     super(props);
-
-    this.state = {
-      data: [],
-      loading: true
-    };
 
     this.addMessage = this.addMessage.bind(this);
     this.removeItem = this.removeItem.bind(this);
@@ -27,27 +22,21 @@ class Chat extends Component {
   }
 
   componentDidMount() {
-    this._isMounted = true;
-
-    axios
-      .get("https://api.myjson.com/bins/1hiqin")
-      .then(res => {
-        if (this._isMounted) {
-          this.setState({
-            loading: false,
-            data: res.data
-          });
-        }
-      })
-      .catch(err => {
-        this.setState({
-          loading: false
-        });
-      });
+    const { dispatch } = this.props;
+    dispatch(fetchMessages());
   }
 
-  componentWillUnmount() {
-    this._isMounted = false;
+  getHeaderData() {
+    const { messages } = this.props;
+
+    const participants = [...new Set(messages.map(item => item.user))].length;
+    const messagesAmount = messages.length;
+
+    return {
+      participants,
+      messagesAmount,
+      lastMessage: messages[messagesAmount - 1].created_at
+    };
   }
 
   addMessage(message) {
@@ -95,49 +84,50 @@ class Chat extends Component {
     return message[0].isLiked;
   }
 
-  getHeaderData() {
-    const { data } = this.state;
-
-    const participants = [...new Set(data.map(item => item.user))].length;
-    const messagesAmount = data.length;
-
-    return {
-      participants,
-      messagesAmount,
-      lastMessage: data[messagesAmount - 1].created_at
-    };
-  }
-
   render() {
-    const { data, loading } = this.state;
+    const { messages, loading, error } = this.props;
+
+    if (error) {
+      return <div>Error! {error.message}</div>;
+    }
+
+    if (loading) {
+      return (
+        <div className="loading-panel">
+          <CircularProgress color="primary" style={{ height: 80, width: 80 }} />
+          <p className="mt-3">Loading</p>
+        </div>
+      );
+    }
 
     return (
       <div className="chat">
         <div className="container">
-          {loading ? (
-            <div className="loading-panel">
-              <CircularProgress
-                color="primary"
-                style={{ height: 80, width: 80 }}
-              />
-              <p className="mt-3">Loading</p>
-            </div>
-          ) : (
-            <React.Fragment>
-              <Header data={this.getHeaderData()} />
-              <MessageList
-                messages={data}
-                removeItem={this.removeItem}
-                likeItem={this.likeItem}
-                editItem={this.editItem}
-              />
-              <MessageInput addMessage={this.addMessage} />
-            </React.Fragment>
-          )}
+          {/* <Header data={this.getHeaderData()} />
+          <MessageList
+            messages={messages}
+            removeItem={this.removeItem}
+            likeItem={this.likeItem}
+            editItem={this.editItem}
+          />
+          <MessageInput addMessage={this.addMessage} /> */}
         </div>
       </div>
     );
   }
 }
 
-export default Chat;
+const mapStateToProps = (state) => {
+  const { messages, loading, error } = state.chat;
+
+  return { messages, loading, error };
+};
+
+export default connect(mapStateToProps)(Chat);
+
+Chat.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  messages: PropTypes.arrayOf(object),
+  loading: PropTypes.bool,
+  error: PropTypes.oneOf([null, string])
+};

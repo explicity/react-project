@@ -13,12 +13,11 @@ function handleErrors(response) {
   return response;
 }
 
-export function fetchProducts() {
+export function fetchMessages() {
   return (dispatch) => {
     dispatch(fetchMessagesPending());
     axios
       .get('https://api.myjson.com/bins/1hiqin')
-      .then(handleErrors)
       .then((res) => {
         if (res.error) {
           throw res.error;
