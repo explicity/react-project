@@ -3,9 +3,9 @@ import axios from "axios";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-import Header from "./components/Header";
-import MessageList from "./components/MessageList";
-import MessageInput from "./components/MessageInput";
+import Header from "./Header";
+import MessageList from "./MessageList";
+import MessageInput from "./MessageInput";
 
 import "./chat.scss";
 
