@@ -4,14 +4,7 @@ import {
   fetchMessagesPending,
   fetchMessagesSuccess,
   fetchMessagesError
-} from './actions';
-
-function handleErrors(response) {
-  if (!response.ok) {
-    throw Error(response.statusText);
-  }
-  return response;
-}
+} from './actions/fetch.actions';
 
 export function fetchMessages() {
   return (dispatch) => {

@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import { chat } from '../scenes/chat/duck/reducer.js';
+import { fetchData } from '../scenes/chat/duck/reducers/fetch.reducer';
 
 const rootReducer = combineReducers({
-  chat
+  fetchData
 })
 
 export default rootReducer;

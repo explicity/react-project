@@ -2,7 +2,7 @@ import {
   FETCH_MESSAGES_PENDING,
   FETCH_MESSAGES_SUCCESS,
   FETCH_MESSAGES_ERROR
-} from './types';
+} from '../constants/fetch.types';
 
 const initialState = {
   messages: [],
@@ -10,7 +10,7 @@ const initialState = {
   error: null
 };
 
-export const chat = (state = initialState, action) => {
+export const fetchData = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_MESSAGES_PENDING:
       return {

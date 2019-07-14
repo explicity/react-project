@@ -118,7 +118,7 @@ class Chat extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { messages, loading, error } = state.chat;
+  const { messages, loading, error } = state.fetchData;
 
   return { messages, loading, error };
 };
@@ -129,5 +129,5 @@ Chat.propTypes = {
   dispatch: PropTypes.func.isRequired,
   messages: PropTypes.arrayOf(object),
   loading: PropTypes.bool,
-  error: PropTypes.oneOf([null, string])
+  error: PropTypes.string
 };
