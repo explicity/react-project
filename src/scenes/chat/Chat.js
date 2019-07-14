@@ -5,11 +5,13 @@ import { connect } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import * as messagesActions from './duck/actions/messages.actions';
+import * as modalActions from './Modal/duck/actions';
 import { fetchMessages } from './duck/operations';
 
 import Header from './Header';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
+import UserModal from './Modal';
 
 import './chat.scss';
 
@@ -54,28 +56,19 @@ class Chat extends Component {
   likeItem(id) {
     const { dispatch } = this.props;
     dispatch(messagesActions.likeMessage(id));
-
-    // const { data } = this.state;
-
-    // let isLiked = !this.ifAlreadyLiked(id);
-    // const messages = data.map(message =>
-    //   message.id === id ? { ...message, isLiked } : message
-    // );
-    // this.setState({
-    //   data: messages
-    // });
   }
 
   editItem(id, text) {
-    const { data } = this.state;
+    const { dispatch } = this.props;
+    dispatch(modalActions.showModal());
 
-    const messages = data.map(item =>
-      item.id === id ? { ...item, message: text } : item
-    );
+    // const messages = data.map(item =>
+    //   item.id === id ? { ...item, message: text } : item
+    // );
 
-    this.setState({
-      data: messages
-    });
+    // this.setState({
+    //   data: messages
+    // });
   }
 
   render() {
@@ -102,8 +95,9 @@ class Chat extends Component {
             messages={messages}
             removeItem={this.removeItem}
             likeItem={this.likeItem}
-            // editItem={this.editItem}
+            editItem={this.editItem}
           />
+          <UserModal />
           <MessageInput addMessage={this.addMessage} />
         </div>
       </div>

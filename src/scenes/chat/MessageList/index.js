@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { map } from 'lodash';
-import moment from 'moment';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { map } from "lodash";
+import moment from "moment";
 
-import Message from '../Message';
-import CurrentUserMessage from '../CurrentUserMessage';
+import Message from "../Message";
 
-import './messageList.scss';
+import "./messageList.scss";
 
 class MessageList extends Component {
   constructor(props) {
@@ -26,7 +25,7 @@ class MessageList extends Component {
 
     if (index !== 0) {
       const secondDate = moment(messages[index - 1].created_at);
-      if (!firstDate.isSame(secondDate, 'day')) {
+      if (!firstDate.isSame(secondDate, "day")) {
         return (
           <div className="time-divider">{moment(firstDate).fromNow()}</div>
         );
@@ -47,16 +46,7 @@ class MessageList extends Component {
       return (
         <React.Fragment key={item.id}>
           {this.getSplitDivider(index)}
-          {item.currentUser ? (
-            <CurrentUserMessage
-              data={item}
-              removeItem={removeItem}
-              editItem={editItem}
-            />
-          ) : (
-            <Message data={item} likeItem={likeItem}
-            />
-          )}
+          <Message data={item} likeItem={likeItem} removeItem={removeItem} editItem={editItem} />
         </React.Fragment>
       );
     });
@@ -67,10 +57,8 @@ class MessageList extends Component {
           <div className="message-list">
             {messagesList}
             <div
-              style={{ float: 'left', clear: 'both', height: 1 }}
-              ref={el => (
-                this.messagesEnd = el
-              )}
+              style={{ float: "left", clear: "both", height: 1 }}
+              ref={el => (this.messagesEnd = el)}
             />
           </div>
         ) : (
@@ -87,5 +75,5 @@ MessageList.propTypes = {
   messages: PropTypes.arrayOf(PropTypes.object),
   removeItem: PropTypes.func,
   likeItem: PropTypes.func,
-  editItem: PropTypes.func,
-}
+  editItem: PropTypes.func
+};

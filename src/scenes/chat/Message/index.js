@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-import { FaRegThumbsUp } from 'react-icons/fa';
+import { FaRegThumbsUp, FaRegEdit, FaTrashAlt } from "react-icons/fa";
 
-import './message.scss';
+import "./message.scss";
 
 class Message extends Component {
   constructor(props) {
@@ -24,23 +24,19 @@ class Message extends Component {
   render() {
     const { data } = this.props;
 
-    const {
-      id,
-      avatar,
-      created_at,
-      message,
-      isLiked
-    } = data;
+    const { id, avatar, created_at, message, isLiked, currentUser } = data;
 
     return (
-      <div className="message">
-        <a href="#" className="avatar">
-          <img
-            src={avatar}
-            alt="user-avatar"
-            style={{ height: 30, width: 30 }}
-          />
-        </a>
+      <div className={`message ${currentUser && "current-user-message"}`}>
+        {!currentUser && (
+          <a href="#" className="avatar">
+            <img
+              src={avatar}
+              alt="user-avatar"
+              style={{ height: 30, width: 30 }}
+            />
+          </a>
+        )}
         <div className="content">
           <div className="metadata">
             <p>{created_at}</p>
@@ -49,10 +45,26 @@ class Message extends Component {
           <div className="actions">
             <button
               type="button"
-              className={`btn-action btn ${isLiked ? 'liked' : null}`}
+              className={`btn-action btn ${isLiked ? "liked" : null}`}
               onClick={() => this.likePost(id)}
             >
               <FaRegThumbsUp />
+            </button>
+            {currentUser && (
+              <button
+                type="button"
+                className="btn-action btn"
+                onClick={() => this.props.removeItem(id)}
+              >
+                <FaTrashAlt />
+              </button>
+            )}
+            <button
+              type="button"
+              className="btn-action btn"
+              onClick={() => this.props.editItem()}
+            >
+              <FaRegEdit />
             </button>
           </div>
         </div>
@@ -72,5 +84,5 @@ Message.propTypes = {
     currentUser: PropTypes.bool,
     isLiked: PropTypes.bool,
     avatar: PropTypes.string
-  }),
+  })
 };
