@@ -14,6 +14,14 @@ export const messaging = (state, action) => {
         messages: [...state.messages, action.payload]
       };
 
+    case messageTypes.LIKE_MESSAGE:
+      return {
+        ...state,
+        messages: state.messages.map(message => (
+          message.id === action.payload.id ? { ...message, isLiked: true } : message
+        ))
+      };
+
     default:
       return state;
   }

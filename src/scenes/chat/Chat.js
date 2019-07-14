@@ -52,15 +52,18 @@ class Chat extends Component {
   }
 
   likeItem(id) {
-    const { data } = this.state;
+    const { dispatch } = this.props;
+    dispatch(messagesActions.likeMessage(id));
 
-    let isLiked = !this.ifAlreadyLiked(id);
-    const messages = data.map(message =>
-      message.id === id ? { ...message, isLiked } : message
-    );
-    this.setState({
-      data: messages
-    });
+    // const { data } = this.state;
+
+    // let isLiked = !this.ifAlreadyLiked(id);
+    // const messages = data.map(message =>
+    //   message.id === id ? { ...message, isLiked } : message
+    // );
+    // this.setState({
+    //   data: messages
+    // });
   }
 
   editItem(id, text) {
@@ -73,12 +76,6 @@ class Chat extends Component {
     this.setState({
       data: messages
     });
-  }
-
-  ifAlreadyLiked(id) {
-    const { data } = this.state;
-    const message = data.filter(message => message.id === id);
-    return message[0].isLiked;
   }
 
   render() {
@@ -104,7 +101,7 @@ class Chat extends Component {
           <MessageList
             messages={messages}
             removeItem={this.removeItem}
-            // likeItem={this.likeItem}
+            likeItem={this.likeItem}
             // editItem={this.editItem}
           />
           <MessageInput addMessage={this.addMessage} />

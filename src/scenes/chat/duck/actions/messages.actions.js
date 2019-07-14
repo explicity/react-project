@@ -17,3 +17,8 @@ export const addMessage = message => ({
     currentUser: true
   }
 });
+
+export const likeMessage = id => ({
+  type: types.LIKE_MESSAGE,
+  payload: { id }
+});
