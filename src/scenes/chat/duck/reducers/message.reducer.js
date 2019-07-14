@@ -11,7 +11,7 @@ export const messaging = (state, action) => {
     case messageTypes.ADD_MESSAGE:
       return {
         ...state,
-        messages: [...state.messages, action.payload.message]
+        messages: [...state.messages, action.payload]
       };
 
     default:

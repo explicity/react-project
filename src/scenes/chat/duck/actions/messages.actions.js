@@ -1,3 +1,6 @@
+import uuidv4 from "uuid/v4";
+import moment from "moment";
+
 import types from "../constants/messages.types";
 
 export const removeMessage = id => ({
@@ -7,5 +10,10 @@ export const removeMessage = id => ({
 
 export const addMessage = message => ({
   type: types.ADD_MESSAGE,
-  payload: { message }
+  payload: {
+    id: uuidv4(),
+    created_at: `${moment().format("YYYY-MM-DD HH:mm:ss")}`,
+    message,
+    currentUser: true
+  }
 });

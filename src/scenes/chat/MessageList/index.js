@@ -55,7 +55,6 @@ class MessageList extends Component {
             />
           ) : (
             <Message data={item} likeItem={likeItem}
-            removeItem={removeItem}
             />
           )}
         </React.Fragment>
@@ -64,6 +63,7 @@ class MessageList extends Component {
 
     return (
       <React.Fragment>
+        {messages.length !== 0 ? (
           <div className="message-list">
             {messagesList}
             <div
@@ -73,6 +73,9 @@ class MessageList extends Component {
               )}
             />
           </div>
+        ) : (
+          <p>Be the first one to add a comment!</p>
+        )}
       </React.Fragment>
     );
   }

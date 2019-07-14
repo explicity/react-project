@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import uuidv4 from 'uuid/v4';
-import moment from 'moment';
 
 import { Button, Form, FormGroup, Input } from 'reactstrap';
 
@@ -33,14 +31,7 @@ class MessageInput extends Component {
       error: ''
     });
 
-    const data = {
-      id: uuidv4(),
-      created_at: `${moment().format('YYYY-MM-DD HH:mm:ss')}`,
-      message,
-      currentUser: true
-    };
-
-    this.props.addMessage(data);
+    this.props.addMessage(message);
   
     this.setState({
       message: ''
