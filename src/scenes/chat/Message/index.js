@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import { FaRegThumbsUp, FaRegEdit, FaTrashAlt } from "react-icons/fa";
+import { FaRegThumbsUp, FaRegEdit, FaTrashAlt } from 'react-icons/fa';
 
-import "./message.scss";
+import './message.scss';
 
 class Message extends Component {
   constructor(props) {
@@ -14,7 +14,8 @@ class Message extends Component {
     };
 
     this.handleMouseHover = this.handleMouseHover.bind(this);
-    this.likePost = this.likePost.bind(this);
+    this.likeMessage = this.likeMessage.bind(this);
+    this.editMessage = this.editMessage.bind(this);
   }
 
   handleMouseHover() {
@@ -23,13 +24,20 @@ class Message extends Component {
     });
   }
 
-  likePost(id) {
+  likeMessage(id) {
     const { likeItem, data } = this.props;
     const { currentUser } = data;
 
     if (!currentUser) {
       likeItem(id);
     }
+  }
+
+  editMessage(id) {
+    console.log('hi');
+
+    this.props.editItem(id);
+    
   }
 
   render() {
@@ -39,7 +47,7 @@ class Message extends Component {
 
     return (
       <div
-        className={`message ${currentUser && "current-user-message"}`}
+        className={`message ${currentUser && 'current-user-message'}`}
         onMouseEnter={this.handleMouseHover}
         onMouseLeave={this.handleMouseHover}
       >
@@ -60,8 +68,8 @@ class Message extends Component {
           <div className="actions">
             <button
               type="button"
-              className={`btn-action btn ${isLiked ? "liked" : null}`}
-              onClick={() => this.likePost(id)}
+              className={`btn-action btn ${isLiked ? 'liked' : null}`}
+              onClick={() => this.likeMessage(id)}
             >
               <FaRegThumbsUp />
             </button>
@@ -74,15 +82,15 @@ class Message extends Component {
                 <FaTrashAlt />
               </button>
             )}
-            {currentUser || (!currentUser && isHovering) ? (
+            {isHovering && (
               <button
                 type="button"
                 className="btn-action btn"
-                onClick={() => this.props.editItem(id)}
+                onClick={() => this.editMessage(id)}
               >
                 <FaRegEdit />
               </button>
-            ) : null}
+            )}
           </div>
         </div>
       </div>

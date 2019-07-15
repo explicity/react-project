@@ -6,7 +6,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import * as messagesActions from './duck/actions/messages.actions';
 import * as modalActions from './Modal/duck/actions';
-import { fetchMessages } from './duck/operations';
+import { fetchMessages, isNotLastUserMessage } from './duck/operations';
 
 import Header from './Header';
 import MessageList from './MessageList';
@@ -59,9 +59,12 @@ class Chat extends Component {
   }
 
   editItem(id) {
-    const { dispatch } = this.props;
-    dispatch(modalActions.setCurrentUserId(id));
-    dispatch(modalActions.showModal());
+    const { dispatch, messages } = this.props;
+
+    if (isNotLastUserMessage(messages, id)) {
+      dispatch(modalActions.setCurrentUserId(id));
+      dispatch(modalActions.showModal());
+    }
   }
 
   render() {
