@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, userRef } from "react";
 import PropTypes from "prop-types";
 import { map } from "lodash";
 import moment from "moment";
@@ -12,11 +12,6 @@ class MessageList extends Component {
     super(props);
 
     this.getSplitDivider = this.getSplitDivider.bind(this);
-    // this.scrollToBottom = this.scrollToBottom.bind(this);
-  }
-
-  componentDidMount() {
-    // this.scrollToBottom();
   }
 
   getSplitDivider(index) {
@@ -35,10 +30,6 @@ class MessageList extends Component {
     }
   }
 
-  // scrollToBottom() {
-  //   this.messagesEnd.scrollIntoView({ behavior: 'smooth' });
-  // }
-
   render() {
     const { messages, removeItem, likeItem, editItem } = this.props;
 
@@ -56,10 +47,6 @@ class MessageList extends Component {
         {messages.length !== 0 ? (
           <div className="message-list">
             {messagesList}
-            <div
-              style={{ float: "left", clear: "both", height: 1 }}
-              ref={el => (this.messagesEnd = el)}
-            />
           </div>
         ) : (
           <p>Be the first one to add a comment!</p>

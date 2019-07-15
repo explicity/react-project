@@ -24,11 +24,17 @@ class Chat extends Component {
     this.likeItem = this.likeItem.bind(this);
     this.editItem = this.editItem.bind(this);
     this.getHeader = this.getHeader.bind(this);
+    this.arrowUpListener = this.arrowUpListener.bind(this);
   }
 
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(fetchMessages());
+    document.addEventListener('keydown', this.arrowUpListener, false)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.arrowUpListener, false)
   }
 
   getHeader() {
@@ -73,7 +79,16 @@ class Chat extends Component {
     }
   }
 
+  arrowUpListener(event) {
+    console.log('yep');
+    
+    const { messages } = this.props;
+    const userMessages = messages.filter(item => item.currentUser === true);
 
+    if (event.keyCode === 38 && userMessages.length) {
+      this.editItem(userMessages[userMessages.length - 1].id)
+    }
+  }
 
   render() {
     const { messages, loading, error } = this.props;
