@@ -23,6 +23,7 @@ class Chat extends Component {
     this.removeItem = this.removeItem.bind(this);
     this.likeItem = this.likeItem.bind(this);
     this.editItem = this.editItem.bind(this);
+    this.getHeader = this.getHeader.bind(this);
   }
 
   componentDidMount() {
@@ -30,17 +31,22 @@ class Chat extends Component {
     dispatch(fetchMessages());
   }
 
-  getHeaderData() {
+  getHeader() {
     const { messages } = this.props;
 
-    const participants = [...new Set(messages.map(item => item.user))].length;
-    const messagesAmount = messages.length;
+    if (messages.length) {
+      const participants = [...new Set(messages.map(item => item.user))].length;
+      const messagesAmount = messages.length;
+      const headerData = {
+        participants,
+        messagesAmount,
+        lastMessage: messages[messagesAmount - 1].created_at
+      };
 
-    return {
-      participants,
-      messagesAmount,
-      lastMessage: messages[messagesAmount - 1].created_at
-    };
+      return <Header data={headerData} />
+    }
+
+    return null;
   }
 
   addMessage(message) {
@@ -67,6 +73,8 @@ class Chat extends Component {
     }
   }
 
+
+
   render() {
     const { messages, loading, error } = this.props;
 
@@ -86,15 +94,15 @@ class Chat extends Component {
     return (
       <div className="chat">
         <div className="container">
-          {/* <Header data={this.getHeaderData()} /> */}
+          {this.getHeader()}
           <MessageList
             messages={messages}
             removeItem={this.removeItem}
             likeItem={this.likeItem}
             editItem={this.editItem}
           />
-          <UserModal />
           <MessageInput addMessage={this.addMessage} />
+          <UserModal />
         </div>
       </div>
     );
