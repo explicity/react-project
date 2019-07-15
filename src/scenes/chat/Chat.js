@@ -80,8 +80,6 @@ class Chat extends Component {
   }
 
   arrowUpListener(event) {
-    console.log('yep');
-    
     const { messages } = this.props;
     const userMessages = messages.filter(item => item.currentUser === true);
 
