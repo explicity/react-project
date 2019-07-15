@@ -9,7 +9,18 @@ class Message extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      isHovering: false
+    };
+
+    this.handleMouseHover = this.handleMouseHover.bind(this);
     this.likePost = this.likePost.bind(this);
+  }
+
+  handleMouseHover() {
+    this.setState({
+      isHovering: !this.state.isHovering
+    });
   }
 
   likePost(id) {
@@ -22,12 +33,16 @@ class Message extends Component {
   }
 
   render() {
+    const { isHovering } = this.state;
     const { data } = this.props;
-
     const { id, avatar, created_at, message, isLiked, currentUser } = data;
 
     return (
-      <div className={`message ${currentUser && "current-user-message"}`}>
+      <div
+        className={`message ${currentUser && "current-user-message"}`}
+        onMouseEnter={this.handleMouseHover}
+        onMouseLeave={this.handleMouseHover}
+      >
         {!currentUser && (
           <a href="#" className="avatar">
             <img
@@ -59,13 +74,15 @@ class Message extends Component {
                 <FaTrashAlt />
               </button>
             )}
-            <button
-              type="button"
-              className="btn-action btn"
-              onClick={() => this.props.editItem()}
-            >
-              <FaRegEdit />
-            </button>
+            {currentUser || (!currentUser && isHovering) ? (
+              <button
+                type="button"
+                className="btn-action btn"
+                onClick={() => this.props.editItem()}
+              >
+                <FaRegEdit />
+              </button>
+            ) : null}
           </div>
         </div>
       </div>
