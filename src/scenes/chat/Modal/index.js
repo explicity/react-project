@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import {
   Form,
@@ -10,30 +10,47 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter
-} from "reactstrap";
+} from 'reactstrap';
+
+import * as modalActions from './duck/actions';
+import * as messagesActions from '../duck/actions/messages.actions';
 
 class UserModal extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      text: ""
+      text: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.onCancel = this.onCancel.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.userId !== this.props.userId && nextProps.userId !== '') {
+      const user = this.props.messages.find(item => item.id === nextProps.userId);
+      console.log(user);
+      this.setState({
+        text: user.message
+      });
+    }
   }
 
   onSubmit(event) {
     event.preventDefault();
-
-    const { data } = this.props;
-    const { id } = data;
+    const { dispatch, userId } = this.props;
     const { text } = this.state;
 
-    this.props.editItem(id, text);
-    this.toggle();
-  }
+
+    dispatch(messagesActions.updateMessage(userId, text));
+    dispatch(modalActions.dropCurrentUserId());
+    dispatch(modalActions.hideModal());
+    this.setState({
+      text: ''
+    });
+}
 
   handleChange(event) {
     const { value, name } = event.target;
@@ -46,11 +63,11 @@ class UserModal extends Component {
   render() {
     const { text } = this.state;
     const { isShown } = this.props;
-
+    
     return (
       <Modal isOpen={isShown}>
         <ModalHeader>Edit message</ModalHeader>
-        <Form onSubmit={this.onSubmit} className="message-change-input">
+        <Form className="message-change-input">
           <ModalBody>
             <FormGroup>
               <Input
@@ -62,7 +79,7 @@ class UserModal extends Component {
             </FormGroup>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary">Save Changes</Button>
+            <Button onClick={this.onSubmit} color="primary">Save Changes</Button>
           </ModalFooter>
         </Form>
       </Modal>
@@ -70,10 +87,11 @@ class UserModal extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  const { isShown } = state.modal;
+const mapStateToProps = (state) => {
+  const { messages } = state.chat;
+  const { isShown, userId } = state.modal;
 
-  return { isShown };
+  return { messages, isShown, userId };
 };
 
 export default connect(mapStateToProps)(UserModal);

@@ -78,7 +78,7 @@ class Message extends Component {
               <button
                 type="button"
                 className="btn-action btn"
-                onClick={() => this.props.editItem()}
+                onClick={() => this.props.editItem(id)}
               >
                 <FaRegEdit />
               </button>

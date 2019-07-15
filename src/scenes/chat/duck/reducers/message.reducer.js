@@ -1,24 +1,34 @@
-import messageTypes from "../constants/messages.types";
+import types from '../constants/messages.types';
 
 export const messaging = (state, action) => {
   switch (action.type) {
-    case messageTypes.REMOVE_MESSAGE:
+    case types.REMOVE_MESSAGE:
       return {
         ...state,
         messages: state.messages.filter(data => action.payload.id !== data.id)
       };
 
-    case messageTypes.ADD_MESSAGE:
+    case types.ADD_MESSAGE:
       return {
         ...state,
         messages: [...state.messages, action.payload]
       };
 
-    case messageTypes.LIKE_MESSAGE:
+    case types.LIKE_MESSAGE:
       return {
         ...state,
-        messages: state.messages.map(message => (
-          message.id === action.payload.id ? { ...message, isLiked: true } : message
+        messages: state.messages.map(message =>(          
+          message.id === action.payload.id
+            ? { ...message, isLiked: true }
+            : message
+        ))
+      };
+
+    case types.UPDATE_MESSAGE:
+      return {
+        ...state,
+        messages: state.messages.map(item => (
+          item.id === action.payload.id ? { ...item, message: action.payload.text } : item
         ))
       };
 

@@ -58,17 +58,10 @@ class Chat extends Component {
     dispatch(messagesActions.likeMessage(id));
   }
 
-  editItem(id, text) {
+  editItem(id) {
     const { dispatch } = this.props;
+    dispatch(modalActions.setCurrentUserId(id));
     dispatch(modalActions.showModal());
-
-    // const messages = data.map(item =>
-    //   item.id === id ? { ...item, message: text } : item
-    // );
-
-    // this.setState({
-    //   data: messages
-    // });
   }
 
   render() {
