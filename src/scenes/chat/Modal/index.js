@@ -31,7 +31,6 @@ class UserModal extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.userId !== this.props.userId && nextProps.userId !== '') {
       const user = this.props.messages.find(item => item.id === nextProps.userId);
-      console.log(user);
       this.setState({
         text: user.message
       });
@@ -50,7 +49,18 @@ class UserModal extends Component {
     this.setState({
       text: ''
     });
-}
+  }
+
+  onCancel(event) {
+    event.preventDefault();
+    const { dispatch } = this.props;
+
+    dispatch(modalActions.dropCurrentUserId());
+    dispatch(modalActions.hideModal());
+    this.setState({
+      text: ''
+    });
+  }
 
   handleChange(event) {
     const { value, name } = event.target;
@@ -63,7 +73,7 @@ class UserModal extends Component {
   render() {
     const { text } = this.state;
     const { isShown } = this.props;
-    
+
     return (
       <Modal isOpen={isShown}>
         <ModalHeader>Edit message</ModalHeader>
@@ -79,7 +89,8 @@ class UserModal extends Component {
             </FormGroup>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={this.onSubmit} color="primary">Save Changes</Button>
+          <Button onClick={this.onCancel} color="secondary">Cancel</Button>
+          <Button onClick={this.onSubmit} color="primary">Save Changes</Button>
           </ModalFooter>
         </Form>
       </Modal>
