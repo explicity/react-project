@@ -13,6 +13,7 @@
   "author": "Olya Yakymovych <msolya@outlook.com>",
   "license": "MIT",
   "dependencies": {
+    "@hapi/joi": "^15.1.0",
     "@material-ui/core": "^4.2.0",
     "axios": "^0.19.0",
     "babel-polyfill": "^6.26.0",
