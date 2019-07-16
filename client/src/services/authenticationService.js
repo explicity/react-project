@@ -10,6 +10,7 @@ export const loginUserService = (request) => {
 
   return axios.post(LOGIN_API_ENDPOINT, parameters)
     .then((response) => {
+      localStorage.setItem('currentUser', JSON.stringify(response.data))
       return response.data;
     })
 }; 

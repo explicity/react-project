@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -35,7 +36,16 @@ class Login extends Component {
 
   render() {
     const { username, password } = this.state;
-    const { user, loading, error } = this.props;
+    const { user, loading, error, isSuccess } = this.props;
+    console.log(isSuccess);
+
+    if (isSuccess) {
+      return user.role === 'Admin' ? (
+        <Redirect to="/userlist" />
+      ) : (
+        <Redirect to="/chat" />
+      );
+    }
 
     return (
       <div className="login-page">
@@ -84,9 +94,9 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => {
-  const { user, loading, error } = state.login;
+  const { user, loading, error, isSuccess } = state.login;
 
-  return { user, loading, error };
+  return { user, loading, error, isSuccess };
 };
 
 export default connect(mapStateToProps)(Login);
