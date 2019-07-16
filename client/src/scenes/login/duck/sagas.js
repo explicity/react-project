@@ -10,6 +10,6 @@ export function* loginSaga(payload) {
       put({ type: types.LOGIN_SUCCESS, response })
     ];
   } catch (error) {
-    yield put({ type: types.LOGIN_ERROR, error })
+    yield put({ type: types.LOGIN_FAILURE, error })
   }
 };
