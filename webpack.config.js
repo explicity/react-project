@@ -7,7 +7,7 @@ const { BaseHrefWebpackPlugin } = require('base-href-webpack-plugin');
 const port = process.env.PORT || 3000;
 
 module.exports = {
-  entry: ['react-hot-loader/patch', './src/index.js'],
+  entry: ['react-hot-loader/patch', './client/src/index.js'],
   output: {
     path: path.join(__dirname, 'public'),
     filename: 'index.bundle.js'
@@ -37,7 +37,7 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'public', 'index.html')
+      template: path.join(__dirname, 'client/public', 'index.html')
     }),
     new BaseHrefWebpackPlugin({ baseHref: '/' })
   ],
