@@ -41,7 +41,7 @@ class Login extends Component {
 
     if (isSuccess) {
       return user.role === 'Admin' ? (
-        <Redirect to="/userlist" />
+        <Redirect to="/users" />
       ) : (
         <Redirect to="/chat" />
       );

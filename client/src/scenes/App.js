@@ -15,7 +15,7 @@ class App extends Component {
           <Route exact path="/" component={Chat} />
           <Route path="/login" component={Login} />
           <PrivateRoute
-            path="/userlist"
+            path="/users"
             roles={Role.Admin}
             component={UserList}
           />
