@@ -1,8 +1,7 @@
 import { takeLatest } from 'redux-saga/effects';
-import { loginSaga } from '../scenes/login/duck/sagas';
 
-import types from '../scenes/login/duck/types';
+import { loginSaga, loginTypes } from '../scenes/login/duck';
 
 export function* watchUserAuthentication() {
-  yield takeLatest(types.LOGIN_REQUEST, loginSaga);
+  yield takeLatest(loginTypes.LOGIN_REQUEST, loginSaga);
 }
