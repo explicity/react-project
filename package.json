@@ -6,6 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpack": "webpack",
     "start": "webpack-dev-server --mode development --config ./webpack.config.js",
+    "serve": "nodemon server/server.js",
     "lint": "eslint src"
   },
   "repository": "https://github.com/explicity/react-project.git",
@@ -14,9 +15,13 @@
   "dependencies": {
     "@material-ui/core": "^4.2.0",
     "axios": "^0.19.0",
+    "babel-polyfill": "^6.26.0",
     "bootstrap": "^4.3.1",
+    "cookie-parser": "^1.4.4",
+    "express": "^4.17.1",
     "lodash": "^4.17.14",
     "moment": "^2.24.0",
+    "morgan": "^1.9.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -27,6 +32,7 @@
     "reactstrap": "^8.0.1",
     "reduce-reducers": "^1.0.4",
     "redux": "^4.0.4",
+    "redux-saga": "^1.0.5",
     "redux-thunk": "^2.3.0",
     "uuid": "^3.3.2"
   },
@@ -36,6 +42,7 @@
     "@babel/preset-env": "^7.5.4",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.6",
+    "babel-plugin-transform-regenerator": "^6.26.0",
     "base-href-webpack-plugin": "^2.0.0",
     "css-loader": "^3.0.0",
     "eslint-config-airbnb": "^17.1.1",

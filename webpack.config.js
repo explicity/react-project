@@ -7,7 +7,7 @@ const { BaseHrefWebpackPlugin } = require('base-href-webpack-plugin');
 const port = process.env.PORT || 3000;
 
 module.exports = {
-  entry: ['react-hot-loader/patch', './client/src/index.js'],
+  entry: ['babel-polyfill', './client/src/index.js'],
   output: {
     path: path.join(__dirname, 'public'),
     filename: 'index.bundle.js'
