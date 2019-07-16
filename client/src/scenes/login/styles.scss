@@ -1,6 +1,13 @@
-.login-page {
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  display: flex;
+.login {
+  &-page {
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    display: flex;
+  }
+
+  &-submit {
+    width: 150px;
+    color: #fff;
+  }
 }

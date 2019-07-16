@@ -9,6 +9,6 @@ export default function* loginSaga(payload) {
     console.log('response: ', response);
     yield put({ type: types.LOGIN_SUCCESS, response });
   } catch (error) {
-    yield put({ type: types.LOGIN_FAILURE, error });
+    yield put({ type: types.LOGIN_FAILURE, error: 'Incorrect username or password' });
   }
 }

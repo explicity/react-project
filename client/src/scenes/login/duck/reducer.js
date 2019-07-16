@@ -1,13 +1,22 @@
-import types from "./types";
+import types from './types';
 
-export default function(state = [], action) {
-  console.log('action: ', action);
+const initialState = {
+  user: {},
+  loading: false,
+  error: null
+};
+
+export default function (state = initialState, action) {
+  console.log("action: ", action);
+  const { response, error } = action;
 
   switch (action.type) {
+    case types.LOGIN_REQUEST:
+      return { ...state, loading: true, error: null };
     case types.LOGIN_SUCCESS:
-      return { ...state };
+      return { ...state, loading: false, user: response };
     case types.LOGIN_FAILURE:
-      return { ...state };
+      return { ...state, loading: false, error, user: {} };
     default:
       return state;
   }
