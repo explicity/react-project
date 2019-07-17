@@ -24,9 +24,10 @@ router.get('/', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   const found = users.some(user => user.id === req.params.id);
+  console.log('found: ', found);
 
   if (found) {
-    res.json(users.filter(user => user.id === req.params.id));
+    res.json(users.filter(user => user.id === req.params.id)[0]);
   } else {
     res
       .status(400)
