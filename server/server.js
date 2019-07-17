@@ -8,6 +8,7 @@ const server = require("http").Server(app);
 
 const usersroutes = require('./routes/UsersRoutes');
 const loginroutes = require('./routes/LoginRoutes');
+const messagesroutes = require('./routes/MessagesRoutes');
 
 server.listen(3001);
 
@@ -19,5 +20,6 @@ app.use(cors());
 
 app.use('/users', usersroutes);
 app.use('/login', loginroutes);
+// app.use('/messages', messagesroutes);
 
 module.exports = app;

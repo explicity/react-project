@@ -1,20 +1,20 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
-import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { loginUserAction } from "./duck/actions";
+import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { loginUserAction } from './duck/actions';
 
-import "./styles.scss";
+import './styles.scss';
 
 class Login extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      username: "",
-      password: ""
+      username: '',
+      password: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -41,9 +41,9 @@ class Login extends Component {
 
     if (isSuccess) {
       return user.role === 'Admin' ? (
-        <Redirect to="/users" />
+          <Redirect to="/users" />
       ) : (
-        <Redirect to="/chat" />
+          <Redirect to="/chat" />
       );
     }
 
@@ -83,7 +83,7 @@ class Login extends Component {
                   />
                 </div>
               ) : (
-                "Submit"
+                'Submit'
               )}
             </Button>
           </Form>
@@ -93,7 +93,7 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { user, loading, error, isSuccess } = state.login;
 
   return { user, loading, error, isSuccess };
