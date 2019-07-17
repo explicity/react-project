@@ -1,18 +1,38 @@
 import React, { Component } from 'react';
+import PropTypes, { object } from 'prop-types';
 import { connect } from 'react-redux';
 import { map } from 'lodash';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Button } from 'reactstrap';
 import UserItem from './UserItem';
-import * as usersActions from './duck/actions';
+import * as userActions from './duck/actions';
 
 import './userList.scss';
+
 class UserList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.onDelete = this.onDelete.bind(this);
+    this.onEdit = this.onEdit.bind(this);
+  }
+
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(usersActions.fetchUsers());
+    dispatch(userActions.fetchUsers());
   }
+
+  onEdit(id) {
+    // this.props.history.push(`/user/${id}`);
+    console.log('hello');
+    
+	}
+
+	onDelete(id) {
+    const { dispatch } = this.props;
+		dispatch(userActions.deleteUser(id));
+	}
 
   render() {
     const { users, loading, error } = this.props;
@@ -36,7 +56,12 @@ class UserList extends Component {
           <Button className="mt-3 mb-3">Add User</Button>
           <div className="card-wrapper">
             {map(users, user => (
-              <UserItem data={user} key={user.id} />
+              <UserItem
+                data={user}
+                key={user.id}
+                onEdit={this.onEdit}
+                onDelete={this.onDelete}
+              />
             ))}
           </div>
         </div>
@@ -52,3 +77,10 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps)(UserList);
+
+UserList.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+  error: PropTypes.string,
+  users: PropTypes.arrayOf(object)
+};
