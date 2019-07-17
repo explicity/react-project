@@ -1,5 +1,11 @@
 .card {
-    max-width: 300px;
-    margin: 0 10px;
-    word-break: break-all;
+  max-width: 300px;
+  word-break: break-all;
+}
+
+.error-wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

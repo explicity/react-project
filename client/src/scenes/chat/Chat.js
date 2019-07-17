@@ -49,7 +49,7 @@ class Chat extends Component {
         lastMessage: messages[messagesAmount - 1].created_at
       };
 
-      return <Header data={headerData} />
+      return <Header data={headerData} />;
     }
 
     return null;
@@ -92,7 +92,7 @@ class Chat extends Component {
     const { messages, loading, error } = this.props;
 
     if (error) {
-      return <div>Error! {error.message}</div>;
+      return <div className="error-wrapper">Error! {error}</div>;
     }
 
     if (loading) {

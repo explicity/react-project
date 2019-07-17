@@ -14,7 +14,7 @@ export default function* usersSaga(payload) {
   } catch (error) {
     yield put({
       type: types.FETCH_USERS_FAILURE,
-      error
+      error: 'Failed to load data. Please try again.'
     });
   }
 }
