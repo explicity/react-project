@@ -22,7 +22,7 @@ router.get('/', (req, res, next) => {
   return res.json(users);
 });
 
-router.get('/:id', (req, res, next) => {
+router.get('/user/:id', (req, res, next) => {
   const found = users.some(user => user.id === req.params.id);
   console.log('found: ', found);
 
@@ -59,7 +59,7 @@ router.post('/', (req, res) => {
   res.json(users);
 });
 
-router.put('/:id', (req, res) => {
+router.put('/user/:id', (req, res) => {
   const found = users.some(user => user.id === req.params.id);
 
   if (found) {
@@ -87,7 +87,7 @@ router.put('/:id', (req, res) => {
   }
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/user/:id', (req, res) => {
   const found = users.find(user => user.id === req.params.id);
 
   if (found) {

@@ -13,11 +13,12 @@ const App = () => {
   return (
     <Router history={history}>
       <Switch>
-        <Route exact path="/" component={Chat} />
+        <Route exact path="/chat" component={Chat} />
         <Route path="/login" component={Login} />
-        <PrivateRoute exact path="/users" roles={Role.Admin} component={UserList} />
+        <PrivateRoute exact path="/" roles={Role.Admin} component={UserList} />
+        <PrivateRoute exact path="/user" roles={Role.Admin} component={UserEditor} />
         <PrivateRoute
-          path="/users/:id"
+          path="/user/:id"
           roles={Role.Admin}
           component={UserEditor}
         />

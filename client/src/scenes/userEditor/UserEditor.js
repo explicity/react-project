@@ -28,6 +28,16 @@ class UserEditor extends Component {
     }
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.userData.id !== prevState.id && nextProps.match.params.id) {
+      return {
+        ...nextProps.userData
+      };
+    } else {
+      return null;
+    }
+  }
+
   handleChange(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value });
@@ -86,10 +96,10 @@ class UserEditor extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const { userData, loading, error } = state.editUser;
 
   return { userData, loading, error };
-}
+};
 
 export default connect(mapStateToProps)(UserEditor);

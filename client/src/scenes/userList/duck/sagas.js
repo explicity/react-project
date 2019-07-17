@@ -6,7 +6,7 @@ import types from './types';
 function* fetchUsers() {
   try {
     const response = yield call(fetchService, {
-      url: '/users',
+      url: '/',
       method: 'GET'
     });
     console.log('response: ', response);
@@ -24,7 +24,7 @@ function* deleteUser(action) {
 
   try {
     yield call(fetchService, {
-      url: `/users/${id}`,
+      url: `/user/${id}`,
       method: 'DELETE'
     });
     yield put({ type: types.FETCH_USERS_REQUEST });

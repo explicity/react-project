@@ -8,7 +8,7 @@ export default function* fetchUser(action) {
 
   try {
     const response = yield call(fetchService, {
-      url: `/users/${id}`,
+      url: `/user/${id}`,
       method: 'GET'
     });
     yield put({ type: types.FETCH_USER_SUCCESS, response });

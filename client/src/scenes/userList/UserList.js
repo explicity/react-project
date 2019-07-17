@@ -16,6 +16,7 @@ class UserList extends Component {
 
     this.onDelete = this.onDelete.bind(this);
     this.onEdit = this.onEdit.bind(this);
+    this.onAdd = this.onAdd.bind(this);
   }
 
   componentDidMount() {
@@ -24,15 +25,19 @@ class UserList extends Component {
   }
 
   onEdit(id) {
-    this.props.history.push(`/users/${id}`);
-    console.log('hello');
-    
+    const { history } = this.props;
+    history.push(`/user/${id}`);    
 	}
 
 	onDelete(id) {
     const { dispatch } = this.props;
 		dispatch(userActions.deleteUser(id));
-	}
+  }
+  
+  onAdd() {
+    const { history } = this.props;
+    history.push('/user');
+  }
 
   render() {
     const { users, loading, error } = this.props;
@@ -53,7 +58,7 @@ class UserList extends Component {
     return (
       <div className="user-list">
         <div className="container">
-          <Button className="mt-3 mb-3">Add User</Button>
+          <Button className="mt-3 mb-3" onClick={this.onAdd}>Add User</Button>
           <div className="card-wrapper">
             {map(users, user => (
               <UserItem
