@@ -1,11 +1,15 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
 
 import { Button } from 'reactstrap';
 import UserItem from './UserItem';
+import * as usersActions from './duck/actions';
 
 import './userList.scss';
 class UserList extends Component {
   componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(usersActions.fetchUsers());
   }
 
   render() {
@@ -24,4 +28,6 @@ class UserList extends Component {
   }
 }
 
-export default UserList;
+
+
+export default connect()(UserList);

@@ -1,6 +1,6 @@
 import { fork } from 'redux-saga/effects';
-import { watchUserAuthentication } from './watchers';
+import { watchUserActions } from './watchers';
 
 export default function* rootSaga() {
-  yield fork(watchUserAuthentication);
+  yield fork(watchUserActions);
 }
