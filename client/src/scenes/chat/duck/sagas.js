@@ -29,8 +29,10 @@ function* addMessage(action) {
     });
     yield put({ type: types.FETCH_MESSAGES_REQUEST });
   } catch (error) {
-    console.log('createMessage error:', error.message);
-  }
+    yield put({
+      type: types.UPDATE_DATA_FAILURE,
+      error: 'Something went wrong! Failed to add the message.'
+    });  }
 }
 
 function* removeMessage(action) {
@@ -44,8 +46,8 @@ function* removeMessage(action) {
     yield put({ type: types.FETCH_MESSAGES_REQUEST });
   } catch (error) {
     yield put({
-      type: types.FETCH_MESSAGES_FAILURE,
-      error: 'Failed to load data. Please try again.'
+      type: types.UPDATE_DATA_FAILURE,
+      error: 'Something went wrong! Failed to delete the message.'
     });
   }
 }
@@ -60,24 +62,29 @@ function* likeMessage(action) {
     });
     yield put({ type: types.FETCH_MESSAGES_REQUEST });
   } catch (error) {
-    console.log('updateMessage error:', error.message);
+    yield put({
+      type: types.UPDATE_DATA_FAILURE,
+      error: 'Something went wrong! Failed to like the post.'
+    });
   }
 }
 
 function* updateMessage(action) {
   const { id, text } = action.payload;
-  const updateMessage = { message: text };
+  const updMessage = { message: text };
 
   try {
     yield call(fetchService, {
       url: `/messages/${id}`,
       method: 'PUT',
-      data: updateMessage
+      data: updMessage
     });
     yield put({ type: types.FETCH_MESSAGES_REQUEST });
   } catch (error) {
-    console.log('updateMessage error:', error.message);
-  }
+    yield put({
+      type: types.UPDATE_DATA_FAILURE,
+      error: 'Something went wrong! Failed to update the message.'
+    });  }
 }
 
 const chatSaga = {

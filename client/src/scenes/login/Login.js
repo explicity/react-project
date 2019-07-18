@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { loginUserAction } from './duck/actions';
 
@@ -37,13 +38,12 @@ class Login extends Component {
   render() {
     const { username, password } = this.state;
     const { user, loading, error, isSuccess } = this.props;
-    console.log(isSuccess);
 
     if (isSuccess) {
       return user.role === 'Admin' ? (
-          <Redirect to="/" />
+        <Redirect to="/" />
       ) : (
-          <Redirect to="/chat" />
+        <Redirect to="/chat" />
       );
     }
 
@@ -100,3 +100,17 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps)(Login);
+
+Login.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+  error: PropTypes.string,
+  isSuccess: PropTypes.bool,
+  user: PropTypes.shape({
+    id: PropTypes.string,
+    username: PropTypes.string,
+    password: PropTypes.string,
+    email: PropTypes.string,
+    role: PropTypes.string
+  })
+};

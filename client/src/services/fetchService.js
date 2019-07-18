@@ -5,8 +5,6 @@ import api from '../helpers/api.json';
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 
 export const fetchService = (request) => {
-  console.log('request: ', request);
-
   const { url, method, data } = request;
   const API_ENDPOINT = api.url + url;
   const dataOrParams = ['GET', 'DELETE'].includes(method) ? 'params' : 'data';
@@ -18,7 +16,6 @@ export const fetchService = (request) => {
       [dataOrParams]: data
     })
     .then(({ data }) => {
-      console.log(data);
       return data;
     });
 };

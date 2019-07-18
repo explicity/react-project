@@ -21,8 +21,12 @@ class MessageEditor extends Component {
 
   componentDidMount() {
     const { id } = this.props.match.params;
-    const { dispatch } = this.props;
-    dispatch(editMessageActions.fetchMessage(id));
+    console.log('this.props: ', this.props);
+
+    if (id) {
+      const { dispatch } = this.props;
+      dispatch(editMessageActions.fetchMessage(id));
+    }
   }
 
   onSubmit(event) {

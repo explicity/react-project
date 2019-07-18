@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
@@ -44,7 +45,7 @@ class UserEditor extends Component {
     const { dispatch, history } = this.props;
 
     if (userData.id) {
-      dispatch(userActions.updateUser(id, userData));
+      dispatch(userActions.updateUser(userData.id, userData));
     } else {
       dispatch(userActions.addUser(userData));
     }
@@ -178,3 +179,9 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps)(UserEditor);
+
+UserEditor.propTypes = {
+  userData: PropTypes.objectOf(),
+  loading: PropTypes.bool,
+  error: PropTypes.string
+};

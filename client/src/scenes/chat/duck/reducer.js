@@ -31,6 +31,14 @@ export default function (state = initialState, action) {
         error,
         messages: []
       };
+    
+    case types.UPDATE_DATA_FAILURE: {
+      return {
+        ...state,
+        loading: false,
+        warning: error
+      }
+    }
 
     default:
       return state;

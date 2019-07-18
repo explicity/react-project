@@ -28,11 +28,11 @@ class Chat extends Component {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(chatActions.fetchMessages());
-    document.addEventListener('keydown', this.arrowUpListener, false)
+    document.addEventListener('keydown', this.arrowUpListener, false);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.arrowUpListener, false)
+    document.removeEventListener('keydown', this.arrowUpListener, false);
   }
 
   getHeader() {
@@ -82,12 +82,12 @@ class Chat extends Component {
     const userMessages = messages.filter(item => item.currentUser === true);
 
     if (event.keyCode === 38 && userMessages.length) {
-      this.editItem(userMessages[userMessages.length - 1].id)
+      this.editItem(userMessages[userMessages.length - 1].id);
     }
   }
 
   render() {
-    const { messages, loading, error } = this.props;
+    const { messages, loading, error, warning } = this.props;
 
     if (error) {
       return <div className="error-wrapper">Error! {error}</div>;
@@ -106,6 +106,7 @@ class Chat extends Component {
       <div className="chat">
         <div className="container">
           {this.getHeader()}
+          {warning && <div className="alert alert-danger alert-wrapper">{warning}</div>}
           <MessageList
             messages={messages}
             removeItem={this.removeItem}
@@ -120,9 +121,9 @@ class Chat extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { messages, loading, error } = state.chat;
+  const { messages, loading, error, warning } = state.chat;
 
-  return { messages, loading, error };
+  return { messages, loading, error, warning };
 };
 
 export default connect(mapStateToProps)(Chat);
@@ -131,5 +132,6 @@ Chat.propTypes = {
   dispatch: PropTypes.func.isRequired,
   messages: PropTypes.arrayOf(object),
   loading: PropTypes.bool,
-  error: PropTypes.string
+  error: PropTypes.string,
+  warning: PropTypes.string
 };

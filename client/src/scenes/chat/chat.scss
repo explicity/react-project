@@ -12,3 +12,11 @@
     letter-spacing: 0.5px;
   }
 }
+
+.alert-wrapper {
+  position: absolute !important;
+  z-index: 100;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 20px;
+}
