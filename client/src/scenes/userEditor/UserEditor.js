@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import * as userActions from '../userList/duck/actions';
 import * as editUserActions from './duck/actions';
 
@@ -12,15 +13,19 @@ class UserEditor extends Component {
     super(props);
 
     this.state = {
-      username: '',
-      email: '',
-      password: '',
-      id: ''
+      passwordHidden: true,
+      userData: {
+        username: '',
+        email: '',
+        password: '',
+        id: ''
+      }
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.onCancel = this.onCancel.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.toggleShow = this.toggleShow.bind(this);
   }
 
   componentDidMount() {
@@ -34,20 +39,23 @@ class UserEditor extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-    const { id } = this.state;
+    const { userData } = this.state;
     const { dispatch, history } = this.props;
 
-    if (id) {
-      dispatch(userActions.updateUser(id, this.state));
+    if (userData.id) {
+      dispatch(userActions.updateUser(id, userData));
     } else {
       // dispatch(editUserActions.addUser(this.state));
     }
 
     this.setState({
-      username: '',
-      email: '',
-      password: '',
-      id: ''
+      ...state,
+      userData: {
+        username: '',
+        email: '',
+        password: '',
+        id: ''
+      }
     });
     history.push('/');
   }
@@ -55,10 +63,13 @@ class UserEditor extends Component {
   onCancel(event) {
     event.preventDefault();
     this.setState({
-      username: '',
-      email: '',
-      password: '',
-      id: ''
+      ...state,
+      userData: {
+        username: '',
+        email: '',
+        password: '',
+        id: ''
+      }
     });
     const { history } = this.props;
     history.push('/');
@@ -85,11 +96,12 @@ class UserEditor extends Component {
     this.setState({ [name]: value });
   }
 
+  toggleShow() {
+    this.setState({ passwordHidden: !this.state.passwordHidden });
+  }
+
   render() {
-    const { userData, loading, error } = this.props;
-    const { username, email, password } = this.state;
-    console.log('userData: ', userData);
-    console.log(this.state);
+    const { passwordHidden, userData } = this.state;
 
     return (
       <div className="modal-edit">
@@ -100,7 +112,7 @@ class UserEditor extends Component {
                 name="username"
                 id="username"
                 placeholder="Username"
-                defaultValue={username}
+                defaultValue={userData.username}
                 onChange={this.handleChange}
               />
               <Label for="username">Username</Label>
@@ -111,21 +123,24 @@ class UserEditor extends Component {
                 name="email"
                 id="email"
                 placeholder="Email"
-                defaultValue={email}
+                defaultValue={userData.email}
                 onChange={this.handleChange}
               />
               <Label for="email">Email</Label>
             </FormGroup>
             <FormGroup className="form-label-group mb-3">
               <Input
-                type="password"
+                type={passwordHidden ? 'password' : 'text'}
                 name="password"
                 id="password"
                 placeholder="password"
-                defaultValue={password}
+                defaultValue={userData.password}
                 onChange={this.handleChange}
               />
               <Label for="password">Password</Label>
+              <Button onClick={this.toggleShow} className="show-password">
+                {passwordHidden ? <FaEye /> : <FaEyeSlash />}
+              </Button>
             </FormGroup>
 
             <Button onClick={this.onCancel} color="secondary" className="mr-2">
