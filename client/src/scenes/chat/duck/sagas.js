@@ -56,7 +56,7 @@ function* likeMessage(action) {
   try {
     yield call(fetchService, {
       url: `/messages/${id}/liked`,
-      method: 'POST',
+      method: 'POST'
     });
     yield put({ type: types.FETCH_MESSAGES_REQUEST });
   } catch (error) {
@@ -64,5 +64,27 @@ function* likeMessage(action) {
   }
 }
 
-const chatSaga = { fetchMessages, removeMessage, addMessage, likeMessage };
+function* updateMessage(action) {
+  const { id, text } = action.payload;
+  const updateMessage = { message: text };
+
+  try {
+    yield call(fetchService, {
+      url: `/messages/${id}`,
+      method: 'PUT',
+      data: updateMessage
+    });
+    yield put({ type: types.FETCH_MESSAGES_REQUEST });
+  } catch (error) {
+    console.log('updateMessage error:', error.message);
+  }
+}
+
+const chatSaga = {
+  fetchMessages,
+  removeMessage,
+  addMessage,
+  likeMessage,
+  updateMessage
+};
 export default chatSaga;

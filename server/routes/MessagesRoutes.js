@@ -58,6 +58,31 @@ router.post('/', (req, res) => {
   res.json(messages);
 });
 
+router.put('/:id', (req, res) => {
+  const found = messages.some(message => message.id === req.params.id);
+
+  if (found) {
+    const updMessage = req.body;
+
+    const { error } = validateMessage(updMessage);
+    if (error) {
+      res.status(400).send(error.details[0].message);
+      return;
+    }
+
+    messages.forEach((item) => {
+      let { message } = updMessage;
+
+      if (item.id === req.params.id) {
+        item.message = message ? message : item.message;
+        res.json({ msg: 'Member update', item });
+      }
+    });
+  } else {
+    res.status(400).json({ msg: 'Cannot update' });
+  }
+});
+
 router.post('/:id/liked', (req, res) => {
   const { id } = req.params;
   const found = messages.find(message => message.id === id);

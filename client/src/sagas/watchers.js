@@ -11,6 +11,7 @@ export function* watchUserActions() {
   yield takeLatest(chatTypes.REMOVE_MESSAGE, chatSaga.removeMessage);
   yield takeLatest(chatTypes.ADD_MESSAGE, chatSaga.addMessage);
   yield takeLatest(chatTypes.LIKE_MESSAGE, chatSaga.likeMessage);
+  yield takeLatest(chatTypes.UPDATE_MESSAGE, chatSaga.updateMessage);
   yield takeLatest(editMessageTypes.FETCH_MESSAGE_REQUEST, editMessageSaga);
   yield takeLatest(userTypes.FETCH_USERS_REQUEST, userSaga.fetchUsers);
   yield takeLatest(userTypes.DELETE_USER_REQUEST, userSaga.deleteUser);

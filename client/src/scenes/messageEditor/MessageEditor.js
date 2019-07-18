@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import { Button, Form, FormGroup, Input } from "reactstrap";
 import * as editMessageActions from "./duck/actions";
+import * as chatActions from '../chat/duck/actions';
 
 class MessageEditor extends Component {
   constructor(props) {
@@ -26,6 +27,15 @@ class MessageEditor extends Component {
 
   onSubmit(event) {
     event.preventDefault();
+    const { id, text } = this.state;
+    const { dispatch, history } = this.props;
+
+    dispatch(chatActions.updateMessage(id, text));
+    this.setState({
+      id: "",
+      text: ""
+    });
+    history.push("/chat");
   }
 
   onCancel(event) {
