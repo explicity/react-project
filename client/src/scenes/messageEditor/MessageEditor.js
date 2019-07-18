@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { Button, Form, FormGroup, Input } from "reactstrap";
+import * as editMessageActions from "./duck/actions";
 
 class MessageEditor extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      id: "",
       text: ""
     };
 
@@ -16,15 +18,10 @@ class MessageEditor extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.userId !== this.props.userId && nextProps.userId !== "") {
-      const user = this.props.messages.find(
-        item => item.id === nextProps.userId
-      );
-      this.setState({
-        text: user.message
-      });
-    }
+  componentDidMount() {
+    const { id } = this.props.match.params;
+    const { dispatch } = this.props;
+    dispatch(editMessageActions.fetchMessage(id));
   }
 
   onSubmit(event) {
@@ -34,23 +31,37 @@ class MessageEditor extends Component {
   onCancel(event) {
     event.preventDefault();
     this.setState({
+      id: "",
       text: ""
     });
     const { history } = this.props;
     history.push("/chat");
   }
 
+  UNSAFE_componentWillReceiveProps(nextProps, prevState) {
+    console.log(nextProps);
+    if (nextProps.message.id !== prevState.id && nextProps.match.params.id) {
+      this.setState({
+        id: nextProps.message.id,
+        text: nextProps.message.message
+      });
+    }
+
+    return null;
+  }
+
   handleChange(event) {
     const { value, name } = event.target;
 
     this.setState({
+      ...this.state,
       [name]: value
     });
   }
 
   render() {
     const { text } = this.state;
-    console.log('this.state: ', this.state);
+    console.log("this.state: ", this.state);
 
     return (
       <div className="modal-edit">
@@ -78,4 +89,10 @@ class MessageEditor extends Component {
   }
 }
 
-export default connect()(MessageEditor);
+const mapStateToProps = state => {
+  const { message, loading, error } = state.editMessage;
+
+  return { message, loading, error };
+};
+
+export default connect(mapStateToProps)(MessageEditor);

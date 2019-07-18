@@ -85,8 +85,6 @@ class UserEditor extends Component {
           id
         }
       });
-
-      return true;
     }
 
     return null;

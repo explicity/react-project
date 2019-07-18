@@ -1,12 +1,12 @@
-import types from "./types";
+import types from './types';
 
 const initialState = {
-  message: {},
+  message: { id: '', text: '' },
   loading: false,
   error: null
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
   const { response, error } = action;
 
   switch (action.type) {
@@ -15,7 +15,7 @@ export default function (state = initialState, action) {
     case types.FETCH_MESSAGE_SUCCESS:
       return { ...state, loading: false, message: response };
     case types.FETCH_MESSAGE_FAILURE:
-      return { ...state, loading: false, error, message: {} };
+      return { ...state, loading: false, error, message: { id: '', text: '' } };
     default:
       return state;
   }

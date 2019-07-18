@@ -117,7 +117,6 @@ class Chat extends Component {
             editItem={this.editItem}
           />
           <MessageInput addMessage={this.addMessage} />
-          <UserModal />
         </div>
       </div>
     );
