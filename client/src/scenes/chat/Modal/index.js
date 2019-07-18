@@ -13,7 +13,7 @@ import {
 } from 'reactstrap';
 
 import * as modalActions from './duck/actions';
-import * as messagesActions from '../duck/actions/messages.actions';
+import * as messagesActions from '../duck/actions';
 
 class UserModal extends Component {
   constructor(props) {

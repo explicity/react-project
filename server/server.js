@@ -20,6 +20,6 @@ app.use(cors());
 
 app.use('/', usersroutes);
 app.use('/login', loginroutes);
-// app.use('/messages', messagesroutes);
+app.use('/messages', messagesroutes);
 
 module.exports = app;

@@ -1,7 +1,11 @@
 import uuidv4 from 'uuid/v4';
 import moment from 'moment';
 
-import types from '../constants/messages.types';
+import types from './types';
+
+export const fetchMessages = () => ({
+  type: types.FETCH_MESSAGES_REQUEST
+});
 
 export const removeMessage = id => ({
   type: types.REMOVE_MESSAGE,

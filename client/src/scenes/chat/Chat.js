@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import * as messagesActions from './duck/actions/messages.actions';
+import * as chatActions from './duck/actions';
 import * as modalActions from './Modal/duck/actions';
-import { fetchMessages, isNotLastUserMessage } from './duck/operations';
+import chatOperations from './duck';
 
 import Header from './Header';
 import MessageList from './MessageList';
@@ -29,7 +29,7 @@ class Chat extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(fetchMessages());
+    dispatch(chatActions.fetchMessages());
     document.addEventListener('keydown', this.arrowUpListener, false)
   }
 
@@ -57,23 +57,23 @@ class Chat extends Component {
 
   addMessage(message) {
     const { dispatch } = this.props;
-    dispatch(messagesActions.addMessage(message));
+    dispatch(chatActions.addMessage(message));
   }
 
   removeItem(id) {
     const { dispatch } = this.props;
-    dispatch(messagesActions.removeMessage(id));
+    dispatch(chatActions.removeMessage(id));
   }
 
   likeItem(id) {
     const { dispatch } = this.props;
-    dispatch(messagesActions.likeMessage(id));
+    dispatch(chatActions.likeMessage(id));
   }
 
   editItem(id) {
     const { dispatch, messages } = this.props;
 
-    if (isNotLastUserMessage(messages, id)) {
+    if (chatOperations.isNotLastUserMessage(messages, id)) {
       dispatch(modalActions.setCurrentUserId(id));
       dispatch(modalActions.showModal());
     }

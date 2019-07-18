@@ -37,7 +37,7 @@ function* updateUser(action) {
 function* addUser(action) {
   const { id, data } = action.payload;
   console.log('data: ', data);
-  const newUser = { ...data, id };
+  const newUser = { ...data, id, role: 'User' };
   console.log('newUser: ', newUser);
 
   try {

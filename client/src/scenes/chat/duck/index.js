@@ -1,17 +1,7 @@
-import reduceReducers from "reduce-reducers";
+import reducer from './reducer';
 
-const initialState = {
-  messages: [],
-  loading: false,
-  error: null
-};
+export { default as chatTypes } from './types';
+export { default as chatSaga } from './sagas';
+export { default as chatOperations } from './operations';
 
-import { fetching } from "./reducers/fetch.reducer";
-import { messaging } from "./reducers/message.reducer";
-
-export { fetchMessages as fetchOperations } from "./operations";
-
-export { default as fetchTypes } from "./constants/fetch.types";
-export { default as messagesTypes } from "./constants/messages.types";
-
-export const chat = reduceReducers(initialState, fetching, messaging);
+export default reducer;

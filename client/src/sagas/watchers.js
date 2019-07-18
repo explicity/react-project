@@ -2,9 +2,11 @@ import { takeLatest } from 'redux-saga/effects';
 
 import { loginSaga, loginTypes } from '../scenes/login/duck';
 import { userSaga, userTypes } from '../scenes/userList/duck';
-import { editUserSaga, editUserTypes } from '../scenes/userEditor/duck'
+import { editUserSaga, editUserTypes } from '../scenes/userEditor/duck';
+import { chatSaga, chatTypes } from '../scenes/chat/duck';
 
 export function* watchUserActions() {
+  yield takeLatest(chatTypes.FETCH_MESSAGES_REQUEST, chatSaga.fetchMessages);
   yield takeLatest(userTypes.FETCH_USERS_REQUEST, userSaga.fetchUsers);
   yield takeLatest(userTypes.DELETE_USER_REQUEST, userSaga.deleteUser);
   yield takeLatest(userTypes.UPDATE_USER_REQUEST, userSaga.updateUser);
