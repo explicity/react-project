@@ -26,14 +26,14 @@ class UserList extends Component {
 
   onEdit(id) {
     const { history } = this.props;
-    history.push(`/user/${id}`);    
-	}
-
-	onDelete(id) {
-    const { dispatch } = this.props;
-		dispatch(userActions.deleteUser(id));
+    history.push(`/user/${id}`);
   }
-  
+
+  onDelete(id) {
+    const { dispatch } = this.props;
+    dispatch(userActions.deleteUser(id));
+  }
+
   onAdd() {
     const { history } = this.props;
     history.push('/user');
@@ -45,20 +45,20 @@ class UserList extends Component {
     if (error) {
       return <div className="error-wrapper">Error! {error}</div>;
     }
-
-    if (loading) {
-      return (
-        <div className="loading-panel">
-          <CircularProgress color="primary" style={{ height: 80, width: 80 }} />
-          <p className="mt-3">Loading</p>
-        </div>
-      );
-    }
-
     return (
       <div className="user-list">
         <div className="container">
-          <Button className="mt-3 mb-3" onClick={this.onAdd}>Add User</Button>
+          <Button className="mt-3 mb-3 mr-3" onClick={this.onAdd}>
+            Add User
+          </Button>
+          {loading && (
+            <div className="loading-pannel-small">
+              <CircularProgress
+                color="primary"
+                style={{ height: 35, width: 35 }}
+              />
+            </div>
+          )}
           <div className="card-wrapper">
             {map(users, user => (
               <UserItem

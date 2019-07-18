@@ -13,10 +13,12 @@ class UserEditor extends Component {
     this.state = {
       username: '',
       email: '',
-      password: ''
+      password: '',
+      id: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.onCancel = this.onCancel.bind(this);
   }
 
   componentDidMount() {
@@ -28,23 +30,44 @@ class UserEditor extends Component {
     }
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
+  UNSAFE_componentWillReceiveProps(nextProps, prevState) {
     if (nextProps.userData.id !== prevState.id && nextProps.match.params.id) {
-      return {
-        ...nextProps.userData
-      };
+      const { userData } = nextProps;
+      this.setState({
+        username: userData.username,
+        email: userData.email,
+        password: userData.password,
+        id: userData.id
+      });
+
+       return true;
     } else {
       return null;
     }
   }
+
 
   handleChange(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   }
 
+  onCancel() {
+    this.setState({
+      username: '',
+      email: '',
+      password: '',
+      id: ''
+    });
+    const { history } = this.props;
+    history.push('/');
+}
+
   render() {
     const { userData, loading, error } = this.props;
+    const { username, email, password } = this.state;
+    console.log('userData: ', userData);
+    console.log(this.state);
 
     return (
       <div className="modal-edit">
@@ -55,7 +78,7 @@ class UserEditor extends Component {
                 name="username"
                 id="username"
                 placeholder="Username"
-                defaultValue={userData.username}
+                defaultValue={username}
                 onChange={this.handleChange}
               />
               <Label for="username">Username</Label>
@@ -66,7 +89,7 @@ class UserEditor extends Component {
                 name="email"
                 id="email"
                 placeholder="Email"
-                defaultValue={userData.email}
+                defaultValue={email}
                 onChange={this.handleChange}
               />
               <Label for="email">Email</Label>
@@ -77,7 +100,7 @@ class UserEditor extends Component {
                 name="password"
                 id="password"
                 placeholder="password"
-                defaultValue={userData.password}
+                defaultValue={password}
                 onChange={this.handleChange}
               />
               <Label for="password">Password</Label>
