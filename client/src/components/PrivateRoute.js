@@ -11,13 +11,13 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => {
         if (!currentUser) {
           return (
             <Redirect
-              to={{ pathname: '/', state: { from: props.location } }}
+              to={{ pathname: '/login', state: { from: props.location } }}
             />
           );
         }
 
         if (roles && roles.indexOf(currentUser.role) === -1) {
-          return <Redirect to={{ pathname: '/' }} />;
+          return <Redirect to={{ pathname: '/login' }} />;
         }
 
         return <Component {...props} />;

@@ -5,13 +5,11 @@ import { connect } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import * as chatActions from './duck/actions';
-import * as modalActions from './Modal/duck/actions';
 import isNotLastUserMessage from './duck/operations';
 
 import Header from './Header';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
-import UserModal from './Modal';
 
 import './chat.scss';
 
@@ -76,8 +74,6 @@ class Chat extends Component {
     if (isNotLastUserMessage(messages, id)) {
       const { history } = this.props;
       history.push(`/chat/${id}`);
-      // dispatch(modalActions.setCurrentUserId(id));
-      // dispatch(modalActions.showModal());
     }
   }
 
