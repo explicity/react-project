@@ -18,5 +18,37 @@ function* fetchMessages() {
   }
 }
 
-const chatSaga = { fetchMessages };
+function* addMessage(action) {
+  const newMessage = { ...action.payload };
+
+  try {
+    yield call(fetchService, {
+      url: '/messages',
+      method: 'POST',
+      data: newMessage
+    });
+    yield put({ type: types.FETCH_MESSAGES_REQUEST });
+  } catch (error) {
+    console.log('createMessage error:', error.message);
+  }
+}
+
+function* removeMessage(action) {
+  const { id } = action.payload;
+
+  try {
+    yield call(fetchService, {
+      url: `/messages/${id}`,
+      method: 'DELETE'
+    });
+    yield put({ type: types.FETCH_MESSAGES_REQUEST });
+  } catch (error) {
+    yield put({
+      type: types.FETCH_MESSAGES_FAILURE,
+      error: 'Failed to load data. Please try again.'
+    });
+  }
+}
+
+const chatSaga = { fetchMessages, removeMessage, addMessage };
 export default chatSaga;

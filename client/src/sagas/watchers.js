@@ -7,6 +7,8 @@ import { chatSaga, chatTypes } from '../scenes/chat/duck';
 
 export function* watchUserActions() {
   yield takeLatest(chatTypes.FETCH_MESSAGES_REQUEST, chatSaga.fetchMessages);
+  yield takeLatest(chatTypes.REMOVE_MESSAGE, chatSaga.removeMessage);
+  yield takeLatest(chatTypes.ADD_MESSAGE, chatSaga.addMessage);
   yield takeLatest(userTypes.FETCH_USERS_REQUEST, userSaga.fetchUsers);
   yield takeLatest(userTypes.DELETE_USER_REQUEST, userSaga.deleteUser);
   yield takeLatest(userTypes.UPDATE_USER_REQUEST, userSaga.updateUser);
