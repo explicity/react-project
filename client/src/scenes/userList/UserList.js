@@ -17,11 +17,20 @@ class UserList extends Component {
     this.onDelete = this.onDelete.bind(this);
     this.onEdit = this.onEdit.bind(this);
     this.onAdd = this.onAdd.bind(this);
+
+    this.state = {
+      id: ''
+    };
   }
 
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(userActions.fetchUsers());
+
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.setState({
+      id: currentUser.id
+    });
   }
 
   onEdit(id) {
@@ -40,6 +49,7 @@ class UserList extends Component {
   }
 
   render() {
+    const { id } = this.state;
     const { users, loading, error } = this.props;
 
     if (error) {
@@ -60,14 +70,18 @@ class UserList extends Component {
             </div>
           )}
           <div className="card-wrapper">
-            {map(users, user => (
-              <UserItem
-                data={user}
-                key={user.id}
-                onEdit={this.onEdit}
-                onDelete={this.onDelete}
-              />
-            ))}
+            {map(
+              users,
+              user =>
+                user.id !== id && (
+                  <UserItem
+                    data={user}
+                    key={user.id}
+                    onEdit={this.onEdit}
+                    onDelete={this.onDelete}
+                  />
+                )
+            )}
           </div>
         </div>
       </div>

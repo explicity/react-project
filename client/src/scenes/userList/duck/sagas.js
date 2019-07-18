@@ -30,15 +30,16 @@ function* updateUser(action) {
     });
     yield put({ type: types.FETCH_USERS_REQUEST });
   } catch (error) {
-    console.log('updateUser error:', error.message);
+    yield put({
+      type: types.FETCH_USERS_FAILURE,
+      error: 'Failed to load data. Please try again.'
+    });
   }
 }
 
 function* addUser(action) {
   const { id, data } = action.payload;
-  console.log('data: ', data);
   const newUser = { ...data, id, role: 'User' };
-  console.log('newUser: ', newUser);
 
   try {
     yield call(fetchService, {
@@ -48,7 +49,10 @@ function* addUser(action) {
     });
     yield put({ type: types.FETCH_USERS_REQUEST });
   } catch (error) {
-    console.log('createUser error:', error.message);
+    yield put({
+      type: types.FETCH_USERS_FAILURE,
+      error: 'Failed to load data. Please try again.'
+    });
   }
 }
 

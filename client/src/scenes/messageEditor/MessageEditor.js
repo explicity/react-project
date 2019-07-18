@@ -1,8 +1,10 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import { Button, Form, FormGroup, Input } from "reactstrap";
-import * as editMessageActions from "./duck/actions";
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { Button, Form, FormGroup, Input } from 'reactstrap';
+import * as editMessageActions from './duck/actions';
 import * as chatActions from '../chat/duck/actions';
 
 class MessageEditor extends Component {
@@ -10,8 +12,8 @@ class MessageEditor extends Component {
     super(props);
 
     this.state = {
-      id: "",
-      text: ""
+      id: '',
+      text: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -21,7 +23,6 @@ class MessageEditor extends Component {
 
   componentDidMount() {
     const { id } = this.props.match.params;
-    console.log('this.props: ', this.props);
 
     if (id) {
       const { dispatch } = this.props;
@@ -36,24 +37,23 @@ class MessageEditor extends Component {
 
     dispatch(chatActions.updateMessage(id, text));
     this.setState({
-      id: "",
-      text: ""
+      id: '',
+      text: ''
     });
-    history.push("/chat");
+    history.push('/chat');
   }
 
   onCancel(event) {
     event.preventDefault();
     this.setState({
-      id: "",
-      text: ""
+      id: '',
+      text: ''
     });
     const { history } = this.props;
-    history.push("/chat");
+    history.push('/chat');
   }
 
   UNSAFE_componentWillReceiveProps(nextProps, prevState) {
-    console.log(nextProps);
     if (nextProps.message.id !== prevState.id && nextProps.match.params.id) {
       this.setState({
         id: nextProps.message.id,
@@ -74,8 +74,8 @@ class MessageEditor extends Component {
   }
 
   render() {
+    const { loading, error } = this.props;
     const { text } = this.state;
-    console.log("this.state: ", this.state);
 
     return (
       <div className="modal-edit">
@@ -96,6 +96,17 @@ class MessageEditor extends Component {
             <Button onClick={this.onSubmit} color="primary">
               Save Changes
             </Button>
+            {loading && (
+              <div className="loading-pannel-small">
+                <CircularProgress
+                  color="primary"
+                  style={{ height: 35, width: 35 }}
+                />
+              </div>
+            )}
+            {error && (
+              <div className="alert alert-danger">Something went wrong</div>
+            )}
           </Form>
         </div>
       </div>
@@ -103,10 +114,16 @@ class MessageEditor extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { message, loading, error } = state.editMessage;
 
   return { message, loading, error };
 };
 
 export default connect(mapStateToProps)(MessageEditor);
+
+MessageEditor.propTypes = {
+  userData: PropTypes.objectOf(),
+  loading: PropTypes.bool,
+  error: PropTypes.string
+};

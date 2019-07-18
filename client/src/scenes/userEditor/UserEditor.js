@@ -163,7 +163,7 @@ class UserEditor extends Component {
               </div>
             )}
             {error && (
-              <div className="alert alert-danger">Something went wrong</div>
+              <div className="alert alert-danger mt-2">Something went wrong</div>
             )}
           </Form>
         </div>
@@ -181,7 +181,6 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps)(UserEditor);
 
 UserEditor.propTypes = {
-  userData: PropTypes.objectOf(),
   loading: PropTypes.bool,
   error: PropTypes.string
 };
