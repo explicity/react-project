@@ -24,7 +24,6 @@ router.get('/', (req, res, next) => {
 
 router.get('/user/:id', (req, res, next) => {
   const found = users.some(user => user.id === req.params.id);
-  console.log('found: ', found);
 
   if (found) {
     res.json(users.filter(user => user.id === req.params.id)[0]);
@@ -78,7 +77,6 @@ router.put('/user/:id', (req, res) => {
         user.username = username ? username : user.username;
         user.password = password ? password : user.password;
         user.email = email ? email : user.email;
-
         res.json({ msg: 'Member update', user });
       }
     });

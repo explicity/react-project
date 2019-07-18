@@ -10,3 +10,11 @@ export const deleteUser = id => ({
     id
   }
 });
+
+export const updateUser = (id, data) => ({
+  type: types.UPDATE_USER_REQUEST,
+  payload: {
+    id,
+    data
+  }
+});

@@ -7,6 +7,7 @@ import { editUserSaga, editUserTypes } from '../scenes/userEditor/duck'
 export function* watchUserActions() {
   yield takeLatest(userTypes.FETCH_USERS_REQUEST, userSaga.fetchUsers);
   yield takeLatest(userTypes.DELETE_USER_REQUEST, userSaga.deleteUser);
+  yield takeLatest(userTypes.UPDATE_USER_REQUEST, userSaga.updateUser);
   yield takeLatest(editUserTypes.FETCH_USER_REQUEST, editUserSaga);
   yield takeLatest(loginTypes.LOGIN_REQUEST, loginSaga);
 }

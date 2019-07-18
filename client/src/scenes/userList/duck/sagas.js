@@ -19,6 +19,23 @@ function* fetchUsers() {
   }
 }
 
+function* updateUser(action) {
+  const { id, data } = action.payload;
+  const updatedUser = { ...data };
+  console.log('updatedUser: ', updatedUser);
+
+  try {
+    yield call(fetchService, {
+      url: `/user/${id}`,
+      method: 'PUT',
+      data: updatedUser
+    })
+    yield put({ type: types.FETCH_USERS_REQUEST });
+  } catch (error) {
+    console.log('updateUser error:', error.message);
+  }
+}
+
 function* deleteUser(action) {
   const { id } = action.payload;
 
@@ -36,6 +53,6 @@ function* deleteUser(action) {
   }
 }
 
-const userSaga = { fetchUsers, deleteUser };
+const userSaga = { fetchUsers, deleteUser, updateUser };
 
 export default userSaga;
