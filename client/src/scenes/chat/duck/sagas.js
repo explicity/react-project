@@ -50,5 +50,19 @@ function* removeMessage(action) {
   }
 }
 
-const chatSaga = { fetchMessages, removeMessage, addMessage };
+function* likeMessage(action) {
+  const { id } = action.payload;
+
+  try {
+    yield call(fetchService, {
+      url: `/messages/${id}/liked`,
+      method: 'POST',
+    });
+    yield put({ type: types.FETCH_MESSAGES_REQUEST });
+  } catch (error) {
+    console.log('updateMessage error:', error.message);
+  }
+}
+
+const chatSaga = { fetchMessages, removeMessage, addMessage, likeMessage };
 export default chatSaga;

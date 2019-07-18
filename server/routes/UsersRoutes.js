@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-const uuid = require('uuid');
 const Joi = require('@hapi/joi');
 
 const validateUser = (user) => {
@@ -42,7 +41,7 @@ router.post('/user', (req, res) => {
   }
 
   const newUser = {
-    id: uuid.v4(),
+    id: req.body.id,
     username: req.body.username,
     password: req.body.password,
     email: req.body.email

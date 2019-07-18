@@ -43,7 +43,7 @@ class Message extends Component {
   render() {
     const { isHovering } = this.state;
     const { data } = this.props;
-    const { id, avatar, created_at, message, isLiked, currentUser } = data;
+    const { id, avatar, created_at, message, marked_like, currentUser } = data;
 
     return (
       <div
@@ -68,7 +68,7 @@ class Message extends Component {
           <div className="actions">
             <button
               type="button"
-              className={`btn-action btn ${isLiked ? 'liked' : null}`}
+              className={`btn-action btn ${marked_like ? 'liked' : null}`}
               onClick={() => this.likeMessage(id)}
             >
               <FaRegThumbsUp />
@@ -107,7 +107,7 @@ Message.propTypes = {
     created_at: PropTypes.string,
     message: PropTypes.string,
     currentUser: PropTypes.bool,
-    isLiked: PropTypes.bool,
+    marked_like: PropTypes.bool,
     avatar: PropTypes.string
   })
 };

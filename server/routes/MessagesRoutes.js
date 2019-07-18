@@ -3,12 +3,14 @@ const router = express.Router();
 
 const Joi = require('@hapi/joi');
 
-const validateMessage = message => {
+const validateMessage = (message) => {
   const schema = {
     id: Joi.string(),
     created_at: Joi.string(),
     message: Joi.string(),
-    currentUser: Joi.boolean()
+    currentUser: Joi.boolean(),
+    marked_like: Joi.boolean(),
+    avatar: Joi.string()
   };
 
   return Joi.validate(message, schema);
@@ -42,6 +44,24 @@ router.post('/', (req, res) => {
 
   messages.push(newMessage);
   res.json(messages);
+});
+
+router.post('/:id/liked', (req, res) => {
+  const { id } = req.params;
+  const found = messages.find(message => message.id === id);
+
+  if (found) {
+    messages.forEach((message) => {
+      if (message.id === id) {
+        message.marked_like = true;
+        res.json({ msg: 'Message liked', message });
+      }
+    });
+  } else {
+    res
+      .status(400)
+      .json({ msg: `No member with the id of ${req.params.id} was found` });
+  }
 });
 
 router.delete('/:id', (req, res) => {
