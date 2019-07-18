@@ -7,7 +7,7 @@ const Joi = require('@hapi/joi');
 const validateUser = (user) => {
   const schema = {
     id: Joi.string(),
-    username: Joi.string().min(2),
+    username: Joi.string().min(1),
     password: Joi.string(),
     role: Joi.string(),
     email: Joi.string()
@@ -34,7 +34,7 @@ router.get('/user/:id', (req, res, next) => {
   }
 })
 
-router.post('/', (req, res) => {
+router.post('/user', (req, res) => {
   const { error } = validateUser(req.body);
   if (error) {
     res.status(400).send(error.details[0].message);

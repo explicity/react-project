@@ -9,7 +9,6 @@ function* fetchUsers() {
       url: '/',
       method: 'GET'
     });
-    console.log('response: ', response);
     yield put({ type: types.FETCH_USERS_SUCCESS, response });
   } catch (error) {
     yield put({
@@ -22,17 +21,34 @@ function* fetchUsers() {
 function* updateUser(action) {
   const { id, data } = action.payload;
   const updatedUser = { ...data };
-  console.log('updatedUser: ', updatedUser);
 
   try {
     yield call(fetchService, {
       url: `/user/${id}`,
       method: 'PUT',
       data: updatedUser
-    })
+    });
     yield put({ type: types.FETCH_USERS_REQUEST });
   } catch (error) {
     console.log('updateUser error:', error.message);
+  }
+}
+
+function* addUser(action) {
+  const { id, data } = action.payload;
+  console.log('data: ', data);
+  const newUser = { ...data, id };
+  console.log('newUser: ', newUser);
+
+  try {
+    yield call(fetchService, {
+      url: '/user',
+      method: 'POST',
+      data: newUser
+    });
+    yield put({ type: types.FETCH_USERS_REQUEST });
+  } catch (error) {
+    console.log('createUser error:', error.message);
   }
 }
 
@@ -53,6 +69,6 @@ function* deleteUser(action) {
   }
 }
 
-const userSaga = { fetchUsers, deleteUser, updateUser };
+const userSaga = { fetchUsers, deleteUser, updateUser, addUser };
 
 export default userSaga;

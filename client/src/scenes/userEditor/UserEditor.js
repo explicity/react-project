@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import * as userActions from '../userList/duck/actions';
@@ -45,11 +46,10 @@ class UserEditor extends Component {
     if (userData.id) {
       dispatch(userActions.updateUser(id, userData));
     } else {
-      // dispatch(editUserActions.addUser(this.state));
+      dispatch(userActions.addUser(userData));
     }
 
     this.setState({
-      ...state,
       userData: {
         username: '',
         email: '',
@@ -63,7 +63,6 @@ class UserEditor extends Component {
   onCancel(event) {
     event.preventDefault();
     this.setState({
-      ...state,
       userData: {
         username: '',
         email: '',
@@ -77,12 +76,14 @@ class UserEditor extends Component {
 
   UNSAFE_componentWillReceiveProps(nextProps, prevState) {
     if (nextProps.userData.id !== prevState.id && nextProps.match.params.id) {
-      const { userData } = nextProps;
+      const { username, email, password, id } = nextProps.userData;
       this.setState({
-        username: userData.username,
-        email: userData.email,
-        password: userData.password,
-        id: userData.id
+        userData: {
+          username,
+          email,
+          password,
+          id
+        }
       });
 
       return true;
@@ -93,7 +94,12 @@ class UserEditor extends Component {
 
   handleChange(event) {
     const { name, value } = event.target;
-    this.setState({ [name]: value });
+    this.setState({
+      userData: {
+        ...this.state.userData,
+        [name]: value
+      }
+    });
   }
 
   toggleShow() {
@@ -102,6 +108,7 @@ class UserEditor extends Component {
 
   render() {
     const { passwordHidden, userData } = this.state;
+    const { loading, error } = this.props;
 
     return (
       <div className="modal-edit">
@@ -142,13 +149,23 @@ class UserEditor extends Component {
                 {passwordHidden ? <FaEye /> : <FaEyeSlash />}
               </Button>
             </FormGroup>
-
             <Button onClick={this.onCancel} color="secondary" className="mr-2">
               Cancel
             </Button>
             <Button onClick={this.onSubmit} color="primary">
               Save Changes
             </Button>
+            {loading && (
+              <div className="loading-pannel-small">
+                <CircularProgress
+                  color="primary"
+                  style={{ height: 35, width: 35 }}
+                />
+              </div>
+            )}
+            {error && (
+              <div className="alert alert-danger">Something went wrong</div>
+            )}
           </Form>
         </div>
       </div>
@@ -156,7 +173,7 @@ class UserEditor extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { userData, loading, error } = state.editUser;
 
   return { userData, loading, error };
